@@ -63,7 +63,7 @@ void Menu()
     printf("[L] Visualizar Notas\n");
     printf("[M] Reprovado em 2 ou mais disciplinas\n");
     printf("[N] Visualizar Alunos por Letra\n");
-    printf("[O] Visualizar Disciplinas com medias abaixo de 6.0\n");
+    printf("[O] Visualizar Disciplinas com media abaixo de 6.0\n");
     printf("[P] Visualizar Todos os Dados\n");
     printf("[ESC] Sair\n");
 }
