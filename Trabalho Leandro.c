@@ -1,22 +1,27 @@
 #include <stdio.h>
+#include <conio2.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <windows.h>
 
-struct Alunos
+struct TpAluno
 {
-    char Nome[30], RA[15];
+    char Nome[30], RA[13];
 }
 
-struct Disciplinas
+struct TpDisci
 {
-    char Nome[50];
+    char Descr[30];
 
-    int Codigo;
+    int CodDisc;
 }
 
-struct Notas
+struct TpNota
 {
-    char Nome_Aluno[30];
+    char RA[13];
 
-    int Codigo_Disciplina;
+    int CodDisc;
 
     float Nota;
 }
