@@ -26,24 +26,34 @@ struct TpNota
     float Nota;
 }
 
-void CadastroAluno(Alunos AuxAlunos,int &TL)
+void CadastroAluno(TpAluno AuxAlunos,int &TL)
 {
-    char AuxCad,j=0;
+    char AuxRA,AuxNome,j=0;
 
     system("cls");
     printf("### Cadastro de Aluno ###\n\n");
     do
     {
-        printf("Digite o Nome do Aluno: ");
         printf("Digite o RA do Aluno: ");
-    
+        getch(AuxRA);
         if(TL>0)
             for(i=0;i<TL;i++)
-                if(strcmp(AuxCad,AuxAlunos[i].RA)==0)
+                if(strcmp(AuxCRA,AuxAlunos[i].RA)==0)
                 {
                     i=TL;
                     printf("\n### Nao foi possivel cadastrar esse RA, ele ja esta presente no Sistema\n");
                 }
+        else
+            if(strlen(AuxCad)==12)
+            {
+                strcpy(AuxAlunos.Nome[TL],AuxCad);
+                printf("Digite o Nome do Aluno: ");
+                getch(Auxcad);
+            }
+        // printf("Digite o Nome do Aluno: ");
+        // getch(Auxcad);
+    
+        
         
 
 
@@ -52,6 +62,8 @@ void CadastroAluno(Alunos AuxAlunos,int &TL)
 
 void Menu()
 {
+    char menu;
+
     system("cls");
     printf("### Selecione uma Opcao ###\n\n");
     printf("[A] Cadastro de Alunos\n");
@@ -71,6 +83,9 @@ void Menu()
     printf("[O] Visualizar Disciplinas com media abaixo de 6.0\n");
     printf("[P] Visualizar Todos os Dados\n");
     printf("[ESC] Sair\n");
+    printf("Opcao desejada: ");
+
+    menu = toupper(getch());
 }
 
 int main()
