@@ -35,29 +35,47 @@ void CadastroAluno(TpAluno AuxAlunos,int &TLA)
     do
     {
         printf("Digite o RA do Aluno: ");
-        getch(AuxRA);
+        scanf(" %s",&AuxRA);
 
-        if(TL>0)
-            for(i=0;i<TL;i++)
-                if(strcmp(AuxRA,AuxAlunos[i].RA)==0)
+        if(TLA>0)
+        {
+            while(strcmp(AuxRA,AuxAlunos[i].RA)==0 && i<TLA)
+                i++;
+
+            if(i!=TLA)
+                printf("\n### Nao foi possivel cadastrar esse RA, ele ja esta presente no Sistema\n");
+            else
+            {
+                if(strlen(AuxCad)==12)
                 {
-                    printf("\n### Nao foi possivel cadastrar esse RA, ele ja esta presente no Sistema\n");
+                    printf("Digite o Nome do Aluno: ");
+                    scanf(" %s",&AuxNome);
+
+                    if(strcmp(AuxNome,'/0')!=0)
+                    {
+                        strcpy(AuxAlunos[TLA].RA,AuxRA);
+                        strcpy(AuxAlunos[TLA].Nome,AuxNome);
+                        TLA++;
+                    }
                 }
+                else
+                    printf("### Nome Invalido ###");
+            }
+        }
         else
             if(strlen(AuxCad)==12)
-            {
-                strcpy(AuxAlunos.Nome[TL],AuxCad);
-                printf("Digite o Nome do Aluno: ");
-                getch(Auxcad);
-            }
-        // printf("Digite o Nome do Aluno: ");
-        // getch(Auxcad);
-    
-        
-        
+                {
+                    printf("Digite o Nome do Aluno: ");
+                    scanf(" %s",&AuxNome);
 
-
-    } while (AuxCad != '');
+                    if(strcmp(AuxNome,'/0')!=0)
+                    {
+                        strcpy(AuxAlunos[TLA].RA,AuxRA);
+                        strcpy(AuxAlunos[TLA].Nome,AuxNome);
+                        TLA++;
+                    }
+                }
+    } while (AuxRA != '')
 }
 
 void CadastroNota(TpNota AuxNotas,TpAluno AuxAlunos,TpDisci AuxDisci,int TLA,int TLD, int &TLN)
@@ -79,7 +97,7 @@ void CadastroNota(TpNota AuxNotas,TpAluno AuxAlunos,TpDisci AuxDisci,int TLA,int
 
         if(strcmp(AuxRA,AuxAlunos.RA[i]) != 0)
             printf("\n### RA nao cadastrado, tente novamente ###\n");
-    }while()
+    }while();
 
 }
 
@@ -111,6 +129,74 @@ void Menu()
         printf("Opcao desejada: ");
 
         menu = toupper(getch());
+
+        switch(menu)
+        {
+            case A:
+                CadastroAluno();
+            break;
+
+            case B:
+                CadastroDisciplina();
+            break;
+
+            case C:
+                CadastroNota();
+            break;
+            
+            case D:
+
+            break;
+
+            case E:
+
+            break;
+
+            case F:
+
+            break;
+
+            case G:
+
+            break;
+
+            case H:
+
+            break;
+
+            case I:
+
+            break;
+
+            case J:
+
+            break;
+
+            case K:
+
+            break;
+
+            case L:
+
+            break;
+
+            case M:
+
+            break;
+
+            case N:
+
+            break;
+
+            case O:
+
+            break;
+
+            case P:
+
+            break;
+        }
+
     }while(menu!=27);
 }
 
@@ -118,5 +204,5 @@ int main()
 {
     int TLA=0, TLD=0, TLN=0;
     
-    Menu();
+    Menu(); 
 }
