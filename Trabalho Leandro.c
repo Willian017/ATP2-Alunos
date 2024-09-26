@@ -46,20 +46,26 @@ void CadastroAluno(TpAluno AuxAlunos,int &TLA)
                 printf("\n### Nao foi possivel cadastrar esse RA, ele ja esta presente no Sistema\n");
             else
             {
-                if(strlen(AuxCad)==12)
+                if(strlen(AuxRA)==12)
                 {
-                    printf("Digite o Nome do Aluno: ");
+                    printf("\nDigite o Nome do Aluno: ");
+        
                     scanf(" %s",&AuxNome);
 
-                    if(strcmp(AuxNome,'/0')!=0)
-                    {
-                        strcpy(AuxAlunos[TLA].RA,AuxRA);
-                        strcpy(AuxAlunos[TLA].Nome,AuxNome);
-                        TLA++;
+                    while(strcmp(AuxNome,'/0')!=0)
+                    {  
+                        printf("### Nome Invalido ###");
+                        printf("\nDigite o Nome do Aluno: ");
+                            scanf(" %s",&AuxNome);
                     }
+
+                    strcpy(AuxAlunos[TLA].RA,AuxRA);
+                    strcpy(AuxAlunos[TLA].Nome,AuxNome);
+                    TLA++;
+                        
                 }
                 else
-                    printf("### Nome Invalido ###");
+                    printf("### RA Invalido ###");
             }
         }
         else
