@@ -29,7 +29,7 @@ struct TpNota
 void CadastroAluno(TpAluno AuxAlunos,int &TLA)
 {
     char AuxRA,AuxNome,decisao;
-    int i=0;
+    int Veri=0,i=0;
 
     system("cls");
     printf("### Cadastro de Aluno ###\n\n");
@@ -38,56 +38,27 @@ void CadastroAluno(TpAluno AuxAlunos,int &TLA)
         printf("Digite o RA do Aluno: ");
         scanf(" %s",&AuxRA);
 
-        if(strlen(AuxRA)==12)
+        if(strlen(AuxRA)==12 && Veri==1)
         {
-            if(TLA>0)
-            {
-                i=0;
+            i=0;
 
-                while(strcmp(AuxRA,AuxAlunos[i].RA)!=0 && i<TLA)
-                    i++;
+            while(strcmp(AuxRA,AuxAlunos[i].RA)!=0 && i<TLA)
+                i++;
 
-                if(i!=TLA)
-                    printf("\n### Nao foi possivel cadastrar esse RA, ele ja esta presente no Sistema\n");
-                else
-                {
-                    printf("\nDigite o Nome do Aluno: ");
-                    scanf(" %s",&AuxNome);
-
-                    while(strcmp(AuxNome,"/0")==0)
-                    {  
-                        printf("### Nome Invalido ###");
-                        printf("\nDeseja cancelar esse cadastro? [S]-Sim [N]-Nao\n");
-                        printf("Opcao desejada: ");
-                        decisao = toupper(getch());
-
-                        if(a==21)
-                        {
-                            printf("\nDigite o Nome do Aluno: ");
-                            scanf(" %s",&AuxNome);
-                        }
-                        else
-                            strcpy(AuxNome,"SIM");
-                    }
-
-                    if(stricmp(AuxNome,"SIM")!=0)
-                    {    
-                        strcpy(AuxAlunos[TLA].RA,AuxRA);
-                        strcpy(AuxAlunos[TLA].Nome,AuxNome);
-                        TLA++;
-                    }
-                }
-            }
+            if(i!=TLA)
+                printf("\n### Nao foi possivel cadastrar esse RA, ele ja esta presente no Sistema\n");
             else
             {
                 printf("\nDigite o Nome do Aluno: ");
                 scanf(" %s",&AuxNome);
 
-                while(strcmp(AuxNome,"/0")==0)
+                while(strcmp(AuxNome,"/0")!=0)
                 {  
                     printf("### Nome Invalido ###");
                     printf("\nDeseja cancelar esse cadastro? [S]-Sim [N]-Nao\n");
                     printf("Opcao desejada: ");
+                    decisao = toupper(getch());
+
                     if(a==21)
                     {
                         printf("\nDigite o Nome do Aluno: ");
@@ -105,6 +76,7 @@ void CadastroAluno(TpAluno AuxAlunos,int &TLA)
                 }
             }
         }
+    
         
         if(strcmp(AuxRA,"/0")!=0)
             printf("### RA Invalido ###");
