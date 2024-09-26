@@ -28,7 +28,8 @@ struct TpNota
 
 void CadastroAluno(TpAluno AuxAlunos,int &TLA)
 {
-    char AuxRA,AuxNome,j=0;
+    char AuxRA,AuxNome,decisao;
+    int i=0;
 
     system("cls");
     printf("### Cadastro de Aluno ###\n\n");
@@ -37,51 +38,78 @@ void CadastroAluno(TpAluno AuxAlunos,int &TLA)
         printf("Digite o RA do Aluno: ");
         scanf(" %s",&AuxRA);
 
-        if(TLA>0)
+        if(strlen(AuxRA)==12)
         {
-            while(strcmp(AuxRA,AuxAlunos[i].RA)==0 && i<TLA)
-                i++;
-
-            if(i!=TLA)
-                printf("\n### Nao foi possivel cadastrar esse RA, ele ja esta presente no Sistema\n");
-            else
+            if(TLA>0)
             {
-                if(strlen(AuxRA)==12)
+                i=0;
+
+                while(strcmp(AuxRA,AuxAlunos[i].RA)!=0 && i<TLA)
+                    i++;
+
+                if(i!=TLA)
+                    printf("\n### Nao foi possivel cadastrar esse RA, ele ja esta presente no Sistema\n");
+                else
                 {
                     printf("\nDigite o Nome do Aluno: ");
-        
                     scanf(" %s",&AuxNome);
 
-                    while(strcmp(AuxNome,'/0')!=0)
+                    while(strcmp(AuxNome,"/0")==0)
                     {  
                         printf("### Nome Invalido ###");
-                        printf("\nDigite o Nome do Aluno: ");
+                        printf("\nDeseja cancelar esse cadastro? [S]-Sim [N]-Nao\n");
+                        printf("Opcao desejada: ");
+                        decisao = toupper(getch());
+
+                        if(a==21)
+                        {
+                            printf("\nDigite o Nome do Aluno: ");
                             scanf(" %s",&AuxNome);
+                        }
+                        else
+                            strcpy(AuxNome,"SIM");
                     }
 
-                    strcpy(AuxAlunos[TLA].RA,AuxRA);
-                    strcpy(AuxAlunos[TLA].Nome,AuxNome);
-                    TLA++;
-                        
-                }
-                else
-                    printf("### RA Invalido ###");
-            }
-        }
-        else
-            if(strlen(AuxCad)==12)
-                {
-                    printf("Digite o Nome do Aluno: ");
-                    scanf(" %s",&AuxNome);
-
-                    if(strcmp(AuxNome,'/0')!=0)
-                    {
+                    if(stricmp(AuxNome,"SIM")!=0)
+                    {    
                         strcpy(AuxAlunos[TLA].RA,AuxRA);
                         strcpy(AuxAlunos[TLA].Nome,AuxNome);
                         TLA++;
                     }
                 }
-    } while (AuxRA != '')
+            }
+            else
+            {
+                printf("\nDigite o Nome do Aluno: ");
+                scanf(" %s",&AuxNome);
+
+                while(strcmp(AuxNome,"/0")==0)
+                {  
+                    printf("### Nome Invalido ###");
+                    printf("\nDeseja cancelar esse cadastro? [S]-Sim [N]-Nao\n");
+                    printf("Opcao desejada: ");
+                    if(a==21)
+                    {
+                        printf("\nDigite o Nome do Aluno: ");
+                        scanf(" %s",&AuxNome);
+                    }
+                    else
+                        strcpy(AuxNome,"SIM");
+                }
+
+                if(stricmp(AuxNome,"SIM")!=0)
+                {    
+                    strcpy(AuxAlunos[TLA].RA,AuxRA);
+                    strcpy(AuxAlunos[TLA].Nome,AuxNome);
+                    TLA++;
+                }
+            }
+        }
+        
+        if(strcmp(AuxRA,"/0")!=0)
+            printf("### RA Invalido ###");
+
+    } while(strcmp(AuxRA,"/0")!=0);
 }
 
 void CadastroNota(TpNota AuxNotas,TpAluno AuxAlunos,TpDisci AuxDisci,int TLA,int TLD, int &TLN)
