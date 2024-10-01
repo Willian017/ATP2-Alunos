@@ -5,6 +5,8 @@
 #include <ctype.h>
 #include <windows.h>
 
+#define tf 30;
+
 struct TpAluno
 {
     char Nome[30], RA[13];
@@ -105,6 +107,68 @@ void CadastroNota(TpNota AuxNotas,TpAluno AuxAlunos,TpDisci AuxDisci,int TLA,int
             printf("\n### RA nao cadastrado, tente novamente ###\n");
     }while();
 
+}
+
+void Excluir(tpAluno auxAl[tf], int &TLa)
+{
+	char exclusao[13];
+	int TLa=0,i,j;
+	
+	printf("Digite o RA que deseja excluir:\n");
+	scanf("%s",&exclusao);
+	
+	for(i=0;i<TLa;i++){
+		if((strcmp(auxAl[i].RA,exclusao)==0){
+		printf("Aluno encontrado! O que deseja fazer?\n");
+		printf("(A) Excluir Aluno:\n");
+		printf("(B) Excluir Disciplina:\n");
+		printf("(C) Excluir Nota:\n");
+		scanf("%c",&opcao);
+		
+		if(opcao== 'a'){
+		for(j=i;j<TLa-1;i++){
+			auxAl[i]=auxAl[j+1];
+			}
+					TLa--;
+		printf("Aluno com o RA %d excluído!\n",exclusao);
+			}
+		}else if(opcao=='b'){
+			char excludis[30];
+			int k,l;
+			printf("Digite a Disciplina que deseja excluir:\n");
+			scanf("%s\n",&excludis);
+			
+			for(k=0;k<auxAl[i].Descr;k++){
+				if(strcmp(auxAl[i].Descr[k].cod,excludis)==0 ||
+				strcmp(auxAl[i].Descr[k].nome,excludis)==0)
+				
+				for(l=k;l<auxAl[i].Descr-1;l++){
+					auxAl[i].Descr[l]=auxAl[i].Descr[l+1];
+				}
+				auxAl[i].Descr--;
+				printf("Disciplina Excluída!\n");
+			}
+		}else if(opcao=='c'){
+			char exclunota[30];
+			
+			printf("Digite o nome ou o codigo de uma disciplina para excluir nota;\n");
+			scanf("%s",&exclunota);
+			
+			int k;
+			for(k=0;k<auxAl[i].Descr;k++){
+				if(strcmp(auxAl[i].Descr[k].cod,exclunota)==0 ||
+				strcmp(auxAl[i].Descr[k].nome,exclunota)==0)
+				
+				aluno[i].Descr[k].nota=0;
+				printf("Nota da Disciplina %s Excluída!\n",esclunota);
+			}
+		}
+		printf("Disciplina não encontrada!\n");
+		return;
+	}else{
+		printf("Opção Invalida!\n");
+		return;
+	}
 }
 
 void Menu()
