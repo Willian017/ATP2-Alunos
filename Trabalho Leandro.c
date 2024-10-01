@@ -8,14 +8,14 @@
 struct TpAluno
 {
     char Nome[30], RA[13];
-}
+};
 
 struct TpDisci
 {
     char Descr[30];
 
     int CodDisc;
-}
+};
 
 struct TpNota
 {
@@ -24,9 +24,9 @@ struct TpNota
     int CodDisc;
 
     float Nota;
-}
+};
 
-void CadastroAluno(TpAluno AuxAlunos,int &TLA)
+void CadastroAluno(TpAluno AuxAlunos[30],int &TLA)
 {
     char AuxRA,AuxNome,decisao;
     int Veri=0,i=0;
@@ -139,7 +139,7 @@ void Menu()
         switch(menu)
         {
             case A:
-                CadastroAluno();
+                CadastroAluno(TpAluno Auxalunos,TLA);
             break;
 
             case B:
