@@ -118,7 +118,7 @@ void Excluir(tpAluno auxAl[tf], int &TLa)
 	scanf("%s",&exclusao);
 	
 	for(i=0;i<TLa;i++){
-		if((strcmp(auxAl[i].RA,exclusao)==0){
+		if(strcmp(auxAl[i].RA,exclusao)==0){
 		printf("Aluno encontrado! O que deseja fazer?\n");
 		printf("(A) Excluir Aluno:\n");
 		printf("(B) Excluir Disciplina:\n");
@@ -194,7 +194,7 @@ void Menu()
         printf("[M] Reprovado em 2 ou mais disciplinas\n");
         printf("[N] Visualizar Alunos por Letra\n");
         printf("[O] Visualizar Disciplinas com media abaixo de 6.0\n");
-        printf("[P] Visualizar Todos os Dados\n");
+        printf("[P] Visualizar Todosa os Dados\n");
         printf("[ESC] Sair\n");
         printf("Opcao desejada: ");
 
