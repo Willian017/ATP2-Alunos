@@ -171,6 +171,24 @@ void Excluir(tpAluno auxAl[tf], int &TLa)
 	}
 }
 
+void VisualizarAlunos(TpAluno AuxAlunos, int &TLA)
+{
+    int i;
+
+    system("cls");
+
+    if(TLA==0)
+        printf("### Nao existe nenhum Aluno cadastrado no sistema ###");
+    else
+        for(i=0;i<TLA;i++)
+        {
+            printf("Nome: %s\n", AuxAlunos[i].Nome);
+            printf("RA: %s\n\n", AuxAlunos[i].RA);
+        }
+    
+    getch();
+}
+
 void Menu()
 {
     char menu;
@@ -194,7 +212,7 @@ void Menu()
         printf("[M] Reprovado em 2 ou mais disciplinas\n");
         printf("[N] Visualizar Alunos por Letra\n");
         printf("[O] Visualizar Disciplinas com media abaixo de 6.0\n");
-        printf("[P] Visualizar Todosa os Dados\n");
+        printf("[P] Visualizar Todos os Dados\n");
         printf("[ESC] Sair\n");
         printf("Opcao desejada: ");
 

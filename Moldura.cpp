@@ -36,7 +36,7 @@ int main ()
 	printf("ATP 2 Alunos");
 	Moldura(2,5,79,24,1,3);
 	gotoxy(37,7);
-	printf("Menu")
+	printf("Menu");
 	gotoxy(5,i++); printf("[A] Cadastro de Alunos");gotoxy(45,i); printf("[I] Excluir Notas");
 	gotoxy(5,i++); printf("[B] Cadastro de Disciplinas");gotoxy(45,i); printf("[J] Visualizar Alunos");
 	gotoxy(5,i++); printf("[C] Cadastro de Notas");gotoxy(45,i); printf("[K] Visualizar Disciplina");
