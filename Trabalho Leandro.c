@@ -109,67 +109,74 @@ void CadastroNota(TpNota AuxNotas,TpAluno AuxAlunos,TpDisci AuxDisci,int TLA,int
 
 }
 
-void Excluir(tpAluno auxAl[tf], int &TLa)
+void Excluir(TpAluno auxAl[30], int &TLa, TpDisci auxDisci[30], TpNota auxNota[30], int &TLD, int &TLN)
 {
-	char exclusao[13];
-	int TLa=0,i,j;
-	
-	printf("Digite o RA que deseja excluir:\n");
-	scanf("%s",&exclusao);
-	
-	for(i=0;i<TLa;i++){
-		if(strcmp(auxAl[i].RA,exclusao)==0){
-		printf("Aluno encontrado! O que deseja fazer?\n");
-		printf("(A) Excluir Aluno:\n");
-		printf("(B) Excluir Disciplina:\n");
-		printf("(C) Excluir Nota:\n");
-		scanf("%c",&opcao);
-		
-		if(opcao== 'a'){
-		for(j=i;j<TLa-1;i++){
-			auxAl[i]=auxAl[j+1];
-			}
-					TLa--;
-		printf("Aluno com o RA %d excluído!\n",exclusao);
-			}
-		}else if(opcao=='b'){
-			char excludis[30];
-			int k,l;
-			printf("Digite a Disciplina que deseja excluir:\n");
-			scanf("%s\n",&excludis);
-			
-			for(k=0;k<auxAl[i].Descr;k++){
-				if(strcmp(auxAl[i].Descr[k].cod,excludis)==0 ||
-				strcmp(auxAl[i].Descr[k].nome,excludis)==0)
-				
-				for(l=k;l<auxAl[i].Descr-1;l++){
-					auxAl[i].Descr[l]=auxAl[i].Descr[l+1];
-				}
-				auxAl[i].Descr--;
-				printf("Disciplina Excluída!\n");
-			}
-		}else if(opcao=='c'){
-			char exclunota[30];
-			
-			printf("Digite o nome ou o codigo de uma disciplina para excluir nota;\n");
-			scanf("%s",&exclunota);
-			
-			int k;
-			for(k=0;k<auxAl[i].Descr;k++){
-				if(strcmp(auxAl[i].Descr[k].cod,exclunota)==0 ||
-				strcmp(auxAl[i].Descr[k].nome,exclunota)==0)
-				
-				aluno[i].Descr[k].nota=0;
-				printf("Nota da Disciplina %s Excluída!\n",esclunota);
-			}
-		}
-		printf("Disciplina não encontrada!\n");
-		return;
-	}else{
-		printf("Opção Invalida!\n");
-		return;
-	}
+    char exclusao[13], opcao;
+    int i, j;
+
+    printf("Digite o RA que deseja excluir:\n");
+    scanf("%s", exclusao);
+    
+    // Vai fazer a busca pelo RA do Aluno
+    for (i = 0; i < TLa; i++) {
+        if (strcmp(auxAl[i].RA, exclusao) == 0) { //Vai fazer a comparação para encontrar "== 0 se for verdade "
+            printf("Aluno encontrado! O que deseja fazer?\n");//Achou 
+            printf("(A) Excluir Aluno\n"); //opção dado para excluir aluno diretamente
+            printf("(B) Excluir Disciplina\n"); //opcao dada para excluir disciplina
+            printf("(C) Excluir Nota\n"); //opcao dada para excluir nota
+            scanf(" %c", &opcao); //digita a opcao desejada ,a,b,c
+            opcao = toupper(opcao); //funcao dada para digitar independente maiusculo ou minusculo
+
+            // Excluir Aluno
+            if (opcao == 'A') {
+                for (j = i; j < TLa - 1; j++) { //busca para aluno, "j=i pois é o indici a ser excluído , j=tla-1 pois ira percorrer até o penultimo item"
+                    auxAl[j] = auxAl[j + 1]; // Desloca os alunos para "apagar" o aluno
+                }
+                TLa--; // Reduz a quantidade de alunos
+                printf("Aluno com o RA %s excluído!\n", excluir);
+            }
+
+            // Excluir Disciplina
+            else if (opcao == 'B') {
+                int codDisc, k;
+                printf("Digite o código da disciplina que deseja excluir:\n");
+                scanf("%d", &codDisc);
+
+                for (k = 0; k < TLD; k++) {
+                    if (auxDisci[k].CodDisc == codDisc) { //se a disciplina no vetor for igual a disciplina digitada
+                        for (j = k; j < TLD - 1; j++) { //descoloca o vetor excluindo a disciplina encontrada
+                            auxDisci[j] = auxDisci[j + 1]; // Desloca as disciplinas
+                        }
+                        TLD--; //vetor diminui de tamanho
+                        printf("Disciplina com código %d excluída!\n", codDisc);
+                    }
+                }
+                printf("Disciplina não encontrada!\n");
+            }
+
+            // Excluir Nota
+            else if (opcao == 'C') {
+                int codDisc, k;
+                printf("Digite o código da disciplina para excluir a nota:\n");
+                scanf("%d", &codDisc);
+
+                for (k = 0; k < TLN; k++) { //vetor notas
+                    if (strcmp(auxNota[k].RA, exclusao) == 0 && auxNota[k].CodDisc == codDisc) { //compara se a variavel presente no auxNota é a mesma presente na exclusao, compara se a variavel presente em auxNota é a mesma presente em codDisc
+                        auxNota[k].Nota = 0.0; // se ambas forem verdadeiras zera a nota presente
+                        printf("Nota da disciplina %d excluída!\n", codDisc);
+                    }
+                }
+                printf("Nota não encontrada!\n"); //se for falso exibe a mensagem
+            } else {
+                printf("Opção inválida!\n"); //se digitar algo sem ser a,b,c , exibe a mensagem
+            }
+            return;
+        }
+    }
+
+    printf("Aluno com RA %s não encontrado!\n", exclusao); //se digitar um RA inexistente exibe a mensagem
 }
+
 
 void Menu()
 {
