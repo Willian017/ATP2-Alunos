@@ -248,8 +248,71 @@ void VisualizarAlunos(TpAluno AuxAlunos, int &TLA)
     else
         for(i=0;i<TLA;i++)
         {
-            printf("Nome: %s\n", AuxAlunos[i].Nome);
-            printf("RA: %s\n\n", AuxAlunos[i].RA);
+            printf("RA: %s\n", AuxAlunos[i].RA);
+            printf("Nome: %s\n\n", AuxAlunos[i].Nome);
+        }
+    
+    getch();
+}
+
+void VisualizarDisci(TpDisci AuxDisci, int &TLD)
+{
+    int i;
+
+    system("cls");
+
+    if(TLD==0)
+        printf("### Nao existe nenhuma Disciplina cadastrado no sistema ###");
+    else
+        for(i=0;i<TLD;i++)
+        {
+            printf("Codigo: %d\n", AuxDisci[i].CodDisc);
+            printf("Disciplina: %s\n\n", AuxDisci[i].Descr);
+        }
+    
+    getch();
+}
+
+void VisualizarNotas(Tpnota AuxNotas, int &TLN)
+{
+    int i;
+
+    system("cls");
+
+    if(TLN==0)
+        printf("### Nao existe nenhum Nota cadastrado no sistema ###");
+    else
+        for(i=0;i<TLN;i++)
+        {
+            printf("RA: %s\n", AuxNotas[i].RA);
+            printf("Codigo da Disciplina: %d\n", AuxNotas[i].CodDisc);
+            printf("Nota: %.1f\n\n", AuxNotas[i].Nota);
+        }
+    
+    getch();
+}
+
+void Reprovado2mais(TpNota AuxNotas,TpAuluno AuxAlunos, int &TLN, int &TLA)
+{
+    int i,j,k;
+
+    system("cls");
+
+    if(TLN==0)
+        printf("### Nenhum aluno esta com 2 reprovas ou ###");
+    else
+        for(j=0;j<TLA;j++)
+        {
+            k=0;
+
+            for(i=0;i<TLN;i++)
+                if(strcmp(AuxNotas[i].RA,AuxAlunos[j].RA)==0 && AuxNotas[i].Nota < 6)
+                    k++;
+            if(k>=2)
+            {
+                printf("RA: %s\n", AuxAlunos[j].RA);
+                printf("Nome: %s\n\n", AuxAlunos[j].Nome);
+            }
         }
     
     getch();
