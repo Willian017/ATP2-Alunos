@@ -50,12 +50,12 @@ void Moldura(int CI, int LI, int CF, int LF, int CorT, int CorF)
 	textbackground(0);
 }
 
-void Adicionar(TpAluno AuxNomes[30], int &TLA,TpDisci AuxDisci[50], int &TLD,TpNota AuxNotas[30], int &TLN)
+void Adicionar(TpAluno AuxAlunos[30], int &TLA,TpDisci AuxDisci[50], int &TLD,TpNota AuxNotas[30], int &TLN)
 {
     int i=0;
 
-    strcpy(AuxNomes[i].Nome,"Joao");
-    strcpy(AuxNomes[i].RA,"26.24.1121-1");
+    strcpy(AuxAlunos[i].Nome,"Joao");
+    strcpy(AuxAlunos[i].RA,"26.24.1121-1");
 
     AuxDisci[i].CodDisc = 100;
     strcpy(AuxDisci[i].Descr,"ATP 2");
@@ -66,8 +66,8 @@ void Adicionar(TpAluno AuxNomes[30], int &TLA,TpDisci AuxDisci[50], int &TLD,TpN
 
     i++;
 
-    strcpy(AuxNomes[i].Nome,"Maria");
-    strcpy(AuxNomes[i].RA,"26.28.1921-1");
+    strcpy(AuxAlunos[i].Nome,"Maria");
+    strcpy(AuxAlunos[i].RA,"26.28.1921-1");
 
     AuxDisci[i].CodDisc = 99;
     strcpy(AuxDisci[i].Descr,"ATP 1");
@@ -84,12 +84,25 @@ void Adicionar(TpAluno AuxNomes[30], int &TLA,TpDisci AuxDisci[50], int &TLD,TpN
 void CadastroAluno(TpAluno AuxAlunos[30],int &TLA)
 {
     char AuxRA[15],AuxNome[30],a;
-    int i=0;
+    int i=0,x,j=9;
 
     system("cls");
-    printf("### Cadastro de Aluno ###\n\n");
+    Moldura(1,1,80,25,1,7);
+    Moldura(2,2,79,4,1,3);
+    x=38-(strlen("ATP 2 Alunos")/2);
+    gotoxy(x,3);
+    printf("ATP 2 Alunos");
+    Moldura(2,5,79,24,1,3);
+    x=38-(strlen("### Cadastro de Aluno ###")/2);
+    gotoxy(x,7);
+    printf("### Cadastro de Aluno ###");
+    x=38-(strlen("### Digite '0' para encerrar o cadastro ###")/2);
+    gotoxy(x,22);
+    printf("### Digite '0' para encerrar o cadastro ###");
+    
     do
     {
+    	gotoxy(5,j++);
         printf("Digite o RA do Aluno: ");
         scanf(" %s",&AuxRA);
 
@@ -99,16 +112,28 @@ void CadastroAluno(TpAluno AuxAlunos[30],int &TLA)
 
             while(strcmp(AuxRA,AuxAlunos[i].RA)!=0 && i<TLA)
                 i++;
-
+			
+			
             if(i!=TLA)
-                printf("\n### Nao foi possivel cadastrar esse RA, ele ja esta presente no Sistema\n");
+            {
+            	x=38-(strlen("### Nao foi possivel cadastrar esse RA, ele ja esta presente no Sistema ###")/2);
+            	j++;
+            	gotoxy(x,j);
+                printf("### Nao foi possivel cadastrar esse RA, ele ja esta presente no Sistema ###");
+            }
             else
             {
+            	gotoxy(5,j);
                 printf("Digite o Nome do Aluno: ");
                 scanf(" %s",&AuxNome);
-
+				
                 if(strcmp(AuxNome,"0")==0)
-                    printf("\n### Nome Invalido ###\n\n");
+                {
+                	j++;
+                	x=38-(strlen("### Nome Invalido ###")/2);
+            		gotoxy(x,j);
+                    printf("### Nome Invalido ###");
+            	}
                 else
                 {    
                     strcpy(AuxAlunos[TLA].RA,AuxRA);
@@ -118,7 +143,38 @@ void CadastroAluno(TpAluno AuxAlunos[30],int &TLA)
             }
         }
 		else if(strcmp(AuxRA,"0")!=0)
-            printf("\n### RA Invalido ###\n\n");
+		{
+			j++;
+			x=38-(strlen("### RA Invalido ###")/2);
+            gotoxy(x,j);
+            printf("### RA Invalido ###");
+        }
+        
+        j+=2;
+        
+        if(j>19)
+        {
+        	x=38-(strlen("### Aperte qualquer teclar para continuar ###")/2);
+		    gotoxy(x,22);
+		    printf("### Aperte qualquer teclar para continuar ###");
+        	getch();
+        	
+        	system("cls");
+		    Moldura(1,1,80,25,1,7);
+		    Moldura(2,2,79,4,1,3);
+		    x=38-(strlen("ATP 2 Alunos")/2);
+		    gotoxy(x,3);
+		    printf("ATP 2 Alunos");
+		    Moldura(2,5,79,24,1,3);
+		    x=38-(strlen("### Cadastro de Aluno ###")/2);
+		    gotoxy(x,7);
+		    printf("### Cadastro de Aluno ###");
+		    x=38-(strlen("### Digite '0' para encerrar o cadastro ###")/2);
+		    gotoxy(x,22);
+		    printf("### Digite '0' para encerrar o cadastro ###");
+		    
+		    j=9;
+		}
 
     } while(strcmp(AuxRA,"0")!=0);
 }
@@ -197,12 +253,95 @@ void VisualizarAlunos(TpAluno AuxAlunos[30], int &TLA)
 	textcolor(7);
 	textbackground(0);
     
-    getch();
+    x=38-(strlen("### Aperte qualquer teclar para sair ###")/2);
+	gotoxy(x,22);
+    printf("### Aperte qualquer teclar para sair ###");
+	getch();
+}
+
+void VisualizarDisci(TpDisci AuxDisci[50], int &TLD)
+{
+    int i,j=10,k,x=0;
+
+    
+    system("cls");
+    Moldura(1,1,80,25,1,7);
+    Moldura(2,2,79,4,1,3);
+    x=38-(strlen("ATP 2 Alunos")/2);
+    gotoxy(x,3);
+    printf("ATP 2 Alunos");
+    Moldura(2,5,79,24,1,3);
+    x=38-(strlen("Visuazilar Disciplina")/2);
+    gotoxy(x,7);
+    printf("Visuazilar Disciplina");
+
+    x=38-(strlen("### Nao existe nenhuma Disciplina cadastrado no sistema ###")/2);
+    gotoxy(x,13);
+    if(TLA==0)
+        printf("### Nao existe nenhuma Disciplina cadastrado no sistema ###");
+    else
+    {
+	    textcolor(0);
+		textbackground(7);
+
+        //x=17;
+		
+        for(i=16;i<=59;i++)
+        {
+            gotoxy(i,9);printf(" ");
+        }
+		
+        x=22-(strlen("Codigo")/2);
+        gotoxy(x,9);
+		printf("Codigo");
+        x=44-(strlen("Descricao")/2);
+        gotoxy(x,9);
+	    printf("Descricao");
+			
+		textcolor(7);
+		textbackground(0);
+		
+        gotoxy(28,9);printf(" ");  
+    
+        for(i=0;i<TLA;i++)
+        {
+        				
+			j+=i;
+			
+        	if(i%2==1)
+        	{
+        		textcolor(0);
+				textbackground(7);
+				
+				gotoxy(29,j);
+				for(k=29;k<=59;k++)
+					printf(" ");
+			}
+        	else
+        	{
+        		textcolor(7);
+				textbackground(0);
+			}
+			
+			x=44-(strlen(AuxDisci[i].Descr)/2);
+        	
+            gotoxy(16,j);printf("%s", AuxDisci[i].CodDisc);
+            gotoxy(x,j);printf("%s", AuxDisci[i].Descr);
+        }
+	}
+	
+	textcolor(7);
+	textbackground(0);
+    
+    x=38-(strlen("### Aperte qualquer teclar para sair ###")/2);
+	gotoxy(x,22);
+    printf("### Aperte qualquer teclar para sair ###");
+	getch();
 }
 
 
 
-void CRUD(char Menu,TpAluno AuxNomes[30], int &TLA,TpDisci AuxDisci[50], int &TLD,TpNota AuxNotas[30], int &TLN)
+void CRUD(char Menu,TpAluno AuxAlunos[30], int &TLA,TpDisci AuxDisci[50], int &TLD,TpNota AuxNotas[30], int &TLN)
 {
     int i,x;
 
@@ -234,7 +373,7 @@ void CRUD(char Menu,TpAluno AuxNomes[30], int &TLA,TpDisci AuxDisci[50], int &TL
                 switch(menu)
                 {
                     case 'A':
-                        CadastroAluno(AuxNomes,TLA);
+                        CadastroAluno(AuxAlunos,TLA);
                     break;
 
                     case 'B':
@@ -272,7 +411,7 @@ void CRUD(char Menu,TpAluno AuxNomes[30], int &TLA,TpDisci AuxDisci[50], int &TL
                 switch(menu)
                 {
                     case 'A':
-                        CadastroAluno(AuxNomes,TLA);
+                        CadastroAluno(AuxAlunos,TLA);
                     break;
 
                     case 'B':
@@ -310,7 +449,7 @@ void CRUD(char Menu,TpAluno AuxNomes[30], int &TLA,TpDisci AuxDisci[50], int &TL
                 switch(menu)
                 {
                     case 'A':
-                        CadastroAluno(AuxNomes,TLA);
+                        CadastroAluno(AuxAlunos,TLA);
                     break;
 
                     case 'B':
@@ -348,7 +487,7 @@ void CRUD(char Menu,TpAluno AuxNomes[30], int &TLA,TpDisci AuxDisci[50], int &TL
                 switch(menu)
                 {
                     case 'A':
-                        VisualizarAlunos(AuxNomes,TLA);
+                        VisualizarAlunos(AuxAlunos,TLA);
                     break;
 
                     case 'B':
@@ -371,7 +510,7 @@ void Menu()
     int i,x;
     
     int TLA=0,TLD=0,TLN=0;
-    TpAluno AuxNomes[30];
+    TpAluno AuxAlunos[30];
 	TpDisci AuxDisci[50];
 	TpNota AuxNotas[30];
 
@@ -404,23 +543,23 @@ void Menu()
         switch(menu)
         {
             case 'A':
-                CRUD(menu,AuxNomes,TLA,AuxDisci,TLD,AuxNotas,TLN);
+                CRUD(menu,AuxAlunos,TLA,AuxDisci,TLD,AuxNotas,TLN);
             break;
 
             case 'B':
-                CRUD(menu,AuxNomes,TLA,AuxDisci,TLD,AuxNotas,TLN);
+                CRUD(menu,AuxAlunos,TLA,AuxDisci,TLD,AuxNotas,TLN);
             break;
 
             case 'C':
-				CRUD(menu,AuxNomes,TLA,AuxDisci,TLD,AuxNotas,TLN);
+				CRUD(menu,AuxAlunos,TLA,AuxDisci,TLD,AuxNotas,TLN);
             break;
             
             case 'D':
-                CRUD(menu,AuxNomes,TLA,AuxDisci,TLD,AuxNotas,TLN);
+                CRUD(menu,AuxAlunos,TLA,AuxDisci,TLD,AuxNotas,TLN);
             break;
 
             case 'E':
-                Adicionar(AuxNomes, TLA,AuxDisci,TLD,AuxNotas,TLN);
+                Adicionar(AuxAlunos, TLA,AuxDisci,TLD,AuxNotas,TLN);
             break;
 
             case 'F':
