@@ -787,7 +787,7 @@ void CRUD(char Menu,TpAluno AuxAlunos[30], int &TLA,TpDisci AuxDisci[50], int &T
     }
 }
 
-void Menu()
+int Menu()
 {
     char menu;
 
@@ -847,7 +847,7 @@ void Menu()
             break;
 
             case 'F':
-
+				Excluir(AuxAlunos, TLA, AuxDisci,TLD,AuxNotas,TLN);
             break;
 
             case 'G':
