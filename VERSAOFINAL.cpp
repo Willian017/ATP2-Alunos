@@ -569,6 +569,60 @@ void VisualizarNotas(TpNota AuxNotas[30], int &TLN)
 	getch();
 }
 
+void Excluir(TpAluno AuxAlunos[30], int &TLA, TpDisci AuxDisci[30], TpNota AuxNotas[30], int &TLD, int &TLN) {
+    char exclusao[13], opcao;
+    int i, j;
+
+    printf("Digite o RA que deseja excluir: ");
+    scanf("%s", exclusao);
+
+    for (i = 0; i < TLA; i++) {
+        if (strcmp(AuxAlunos[i].RA, exclusao) == 0) {
+            printf("Aluno encontrado! O que deseja fazer?\n");
+            printf("(A) Excluir Aluno\n(B) Excluir Disciplina\n(C) Excluir Nota\n");
+            opcao = toupper(getch());
+
+            if (opcao == 'A') {
+                for (j = i; j < TLA - 1; j++) {
+                    AuxAlunos[j] = AuxAlunos[j + 1];
+                }
+                TLA--;
+                printf("Aluno excluído\n");
+            } else if (opcao == 'B') {
+                int codDisc, k;
+                printf("Digite o código da disciplina: ");
+                scanf("%d", &codDisc);
+                for (k = 0; k < TLD; k++) {
+                    if (AuxDisci[k].CodDisc == codDisc) {
+                        for (j = k; j < TLD - 1; j++) {
+                            AuxDisci[j] = AuxDisci[j + 1];
+                        }
+                        TLD--;
+                        printf("Disciplina excluÃ­da!\n");
+                        return;
+                    }
+                }
+                printf("Disciplina nÃ£o encontrada!\n");
+            } else if (opcao == 'C') {
+                int codDisc, k;
+                printf("Digite o cÃ³digo da disciplina: ");
+                scanf("%d", &codDisc);
+                for (k = 0; k < TLN; k++) {
+                    if (strcmp(AuxNotas[k].RA, exclusao) == 0 && AuxNotas[k].CodDisc == codDisc) {
+                        AuxNotas[k].Nota = 0.0;
+                        printf("Nota excluida!\n");
+                        return;
+                    }
+                }
+                printf("Nota não encontrada!\n");
+            } else {
+                printf("Opção Invalida!\n");
+            }
+            return;
+        }
+    }
+    printf("RA não encontrado!\n");
+}
 
 
 void CRUD(char Menu,TpAluno AuxAlunos[30], int &TLA,TpDisci AuxDisci[50], int &TLD,TpNota AuxNotas[30], int &TLN)
