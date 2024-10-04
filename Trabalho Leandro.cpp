@@ -30,8 +30,8 @@ struct TpNota
 
 void CadastroAluno(TpAluno AuxAlunos[30],int &TLA)
 {
-    char AuxRA,AuxNome,decisao;
-    int Veri=0,i=0;
+    char AuxRA[15],AuxNome[30],a;
+    int i=0;
 
     system("cls");
     printf("### Cadastro de Aluno ###\n\n");
@@ -40,7 +40,7 @@ void CadastroAluno(TpAluno AuxAlunos[30],int &TLA)
         printf("Digite o RA do Aluno: ");
         scanf(" %s",&AuxRA);
 
-        if(strlen(AuxRA)==12 && Veri==1)
+        if(strlen(AuxRA)==12)
         {
             i=0;
 
@@ -51,26 +51,12 @@ void CadastroAluno(TpAluno AuxAlunos[30],int &TLA)
                 printf("\n### Nao foi possivel cadastrar esse RA, ele ja esta presente no Sistema\n");
             else
             {
-                printf("\nDigite o Nome do Aluno: ");
+                printf("Digite o Nome do Aluno: ");
                 scanf(" %s",&AuxNome);
 
-                while(strcmp(AuxNome,"/0")!=0)
-                {  
-                    printf("### Nome Invalido ###");
-                    printf("\nDeseja cancelar esse cadastro? [S]-Sim [N]-Nao\n");
-                    printf("Opcao desejada: ");
-                    decisao = toupper(getch());
-
-                    if(a==21)
-                    {
-                        printf("\nDigite o Nome do Aluno: ");
-                        scanf(" %s",&AuxNome);
-                    }
-                    else
-                        strcpy(AuxNome,"SIM");
-                }
-
-                if(stricmp(AuxNome,"SIM")!=0)
+                if(strcmp(AuxNome,"0")==0)
+                    printf("\n### Nome Invalido ###\n\n");
+                else
                 {    
                     strcpy(AuxAlunos[TLA].RA,AuxRA);
                     strcpy(AuxAlunos[TLA].Nome,AuxNome);
@@ -78,12 +64,10 @@ void CadastroAluno(TpAluno AuxAlunos[30],int &TLA)
                 }
             }
         }
-    
-        
-        if(strcmp(AuxRA,"/0")!=0)
-            printf("### RA Invalido ###");
+		else if(strcmp(AuxRA,"0")!=0)
+            printf("\n### RA Invalido ###\n\n");
 
-    } while(strcmp(AuxRA,"/0")!=0);
+    } while(strcmp(AuxRA,"0")!=0);
 }
 
 void CadastroNota(TpNota AuxNotas,TpAluno AuxAlunos,TpDisci AuxDisci,int TLA,int TLD, int &TLN)
@@ -237,7 +221,7 @@ void Excluir(TpAluno auxAl[30], int &TLa, TpDisci auxDisci[30], TpNota auxNota[3
 	}
 }
 
-void VisualizarAlunos(TpAluno AuxAlunos, int &TLA)
+void VisualizarAlunos(TpAluno AuxAlunos[30], int &TLA)
 {
     int i;
 
@@ -255,7 +239,7 @@ void VisualizarAlunos(TpAluno AuxAlunos, int &TLA)
     getch();
 }
 
-void VisualizarDisci(TpDisci AuxDisci, int &TLD)
+void VisualizarDisci(TpDisci AuxDisci[50], int &TLD)
 {
     int i;
 
@@ -273,7 +257,7 @@ void VisualizarDisci(TpDisci AuxDisci, int &TLD)
     getch();
 }
 
-void VisualizarNotas(Tpnota AuxNotas, int &TLN)
+void VisualizarNotas(TpNota AuxNotas[30], int &TLN)
 {
     int i;
 
@@ -308,6 +292,7 @@ void Reprovado2mais(TpNota AuxNotas,TpAuluno AuxAlunos, int &TLN, int &TLA)
             for(i=0;i<TLN;i++)
                 if(strcmp(AuxNotas[i].RA,AuxAlunos[j].RA)==0 && AuxNotas[i].Nota < 6)
                     k++;
+
             if(k>=2)
             {
                 printf("RA: %s\n", AuxAlunos[j].RA);
@@ -322,104 +307,75 @@ void Menu()
 {
     char menu;
 
+    int i;
+    
+    int TLA=0,TLD=0,TLN=0;
+    TpAluno AuxNomes[30];
+	TpDisci AuxDisci[50];
+	TpNota AuxNotas[30];
+
     do
     {
+    	i=9;
         system("cls");
-        printf("### Selecione uma Opcao ###\n\n");
-        printf("[A] Cadastro de Alunos\n");
-        printf("[B] Cadastro de Disciplinas\n");
-        printf("[C] Cadastro de Notas\n");
-        printf("[D] Atualizar Alunos\n");
-        printf("[E] Atualizar Disciplinas\n");
-        printf("[F] Atualizar Notas\n");
-        printf("[G] Excluir Alunos\n");
-        printf("[H] Excluir Disciplinas\n");
-        printf("[I] Excluir Notas\n");
-        printf("[J] Visualizar Alunos\n");
-        printf("[K] Visualizar Disciplina\n");
-        printf("[L] Visualizar Notas\n");
-        printf("[M] Reprovado em 2 ou mais disciplinas\n");
-        printf("[N] Visualizar Alunos por Letra\n");
-        printf("[O] Visualizar Disciplinas com media abaixo de 6.0\n");
-        printf("[P] Visualizar Todos os Dados\n");
-        printf("[ESC] Sair\n");
-        printf("Opcao desejada: ");
+        Moldura(1,1,80,25,1,7);
+        Moldura(2,2,79,4,1,3);
+        gotoxy(33,3);
+        printf("ATP 2 Alunos");
+        Moldura(2,5,79,24,1,3);
+        gotoxy(37,7);
+        printf("Menu");
+        gotoxy(5,i++); printf("[A] Cadastrar");gotoxy(45,i);
+        gotoxy(5,i++); printf("[B] Atualizar");gotoxy(45,i);
+        gotoxy(5,i++); printf("[C] Excluir");gotoxy(45,i);
+        gotoxy(5,i++); printf("[D] Visualizar");gotoxy(45,i);
+        gotoxy(5,i++); printf("[E] Reprovado em 2 ou mais disciplinas");
+        gotoxy(5,i++); printf("[F] Visualizar Alunos por Letras");
+        gotoxy(5,i++); printf("[G] Visualizar Disciplinas com media abaixo de 6.0");
+        gotoxy(5,i++); printf("[H] Visualizar Todosa os Dados");
+        gotoxy(5,i++); printf("[ESC] Sair\n");
+        gotoxy(5,i+=2); printf("Opcao desejada: ");
 
         menu = toupper(getch());
 
         switch(menu)
         {
-            case A:
-                CadastroAluno(TpAluno Auxalunos,TLA);
+            case 'A':
+                Adicionar(AuxNomes, TLA,AuxDisci,TLD,AuxNotas,TLN);
             break;
 
-            case B:
-                CadastroDisciplina();
+            case 'B':
+                VisualizarAlunos(AuxNomes,TLA);
             break;
 
-            case C:
-                CadastroNota();
+            case 'C':
+
             break;
             
-            case D:
+            case 'D':
 
             break;
 
-            case E:
+            case 'E':
 
             break;
 
-            case F:
+            case 'F':
 
             break;
 
-            case G:
+            case 'G':
 
             break;
 
-            case H:
-
-            break;
-
-            case I:
-
-            break;
-
-            case J:
-
-            break;
-
-            case K:
-
-            break;
-
-            case L:
-
-            break;
-
-            case M:
-
-            break;
-
-            case N:
-
-            break;
-
-            case O:
-
-            break;
-
-            case P:
+            case 'H':
 
             break;
         }
-
     }while(menu!=27);
 }
 
 int main()
 {
-    int TLA=0, TLD=0, TLN=0;
-    
     Menu(); 
 }
