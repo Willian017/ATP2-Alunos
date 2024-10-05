@@ -569,59 +569,6 @@ void VisualizarNotas(TpNota AuxNotas[30], int &TLN)
 	getch();
 }
 
-void Excluir(TpAluno AuxAlunos[30], int &TLA, TpDisci AuxDisci[30], TpNota AuxNotas[30], int &TLD, int &TLN) {
-    char exclusao[13], opcao;
-    int i, j;
-
-    printf("\n(A) Excluir Aluno\n(B) Excluir Disciplina\n(C) Excluir Nota\n");
-    opcao = toupper(getch());
-
-    if (opcao == 'A') {
-        for (j = i; j < TLA - 1; j++) {
-            printf("Digite o RA que deseja excluir: ");
-            scanf("%s", exclusao);
-            if (strcmp(AuxAlunos[i].RA, exclusao) == 0) {
-                AuxAlunos[j] = AuxAlunos[j + 1];
-            }
-            TLA--;
-            printf("Aluno excluído!\n");
-        }
-    } else if (opcao == 'B') {
-        int codDisc, k;
-        printf("Digite o código da disciplina: ");
-        scanf("%d", &codDisc);
-        for (k = 0; k < TLD; k++) {
-            if (AuxDisci[k].CodDisc == codDisc) {
-                for (j = k; j < TLD - 1; j++) {
-                    AuxDisci[j] = AuxDisci[j + 1];
-                }
-                TLD--;
-                printf("Disciplina excluída!\n");
-                return;
-            }
-        }
-        printf("Disciplina não encontrada!\n");
-    } else if (opcao == 'C') {
-        int codDisc, k;
-        printf("Digite o RA do aluno: ");
-        scanf("%s", exclusao);
-        printf("Digite o código da disciplina: ");
-        scanf("%d", &codDisc);
-        for (k = 0; k < TLN; k++) {
-            if (strcmp(AuxNotas[k].RA, exclusao) == 0 && AuxNotas[k].CodDisc == codDisc) {
-                AuxNotas[k].Nota = 0.0;
-                printf("Nota excluída!\n");
-                return;
-            }
-        }
-        printf("Nota não encontrada!\n");
-    } else {
-        printf("Opção inválida!\n");
-    }
-    return;
-    printf("RA não encontrado!\n");
-}
-
 
 void CRUD(char Menu,TpAluno AuxAlunos[30], int &TLA,TpDisci AuxDisci[50], int &TLD,TpNota AuxNotas[30], int &TLN)
 {
