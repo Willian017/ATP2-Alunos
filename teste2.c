@@ -1,6 +1,6 @@
 void AtualizaCodDiscluno(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 {
-	char AuxDescr[30],menu;
+	char AuxDescr[100],menu;
 
     int i=0,x,j=9,AuxCod;
 
@@ -28,17 +28,17 @@ void AtualizaCodDiscluno(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TL
             if(i==TLD)
             {
             	LimparTela(6,23,3,78);
-            	x=38-(strlen("### Esse Aluno nao esta cadastrado no sistema ###")/2);
+            	x=38-(strlen("### Essa Disciplina nao esta cadastrado no sistema ###")/2);
 				gotoxy(x,14);
-                printf("### Esse Aluno nao esta cadastrado no sistema ###");
+                printf("### Essa Disciplina nao esta cadastrado no sistema ###");
                 sleep(3);
             }
             else
             {
             	LimparTela(6,23,3,78);
-	            x=38-(strlen("### Aluno Encontrado ###")/2);
+	            x=38-(strlen("### Disciplina Encontrada ###")/2);
             	gotoxy(x,14);
-                printf("### Aluno Encontrado ###");;
+                printf("### Disciplina Encontrada ###");;
 	            sleep(2);
 	            
 	            j=9;
@@ -93,16 +93,16 @@ void AtualizaCodDiscluno(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TL
 							    j=9;
 							    
 							    gotoxy(5,j++);
-								printf("Codigo antigo da Disciplina: %s",AuxDisci[i].CodDisc);
+								printf("Codigo antigo da Disciplina: %d",AuxDisci[i].CodDisc);
 								gotoxy(5,j++);
 								printf("Digite o novo Codigo: ");
-        						scanf(" %s",&AuxCod);
+        						scanf(" %d",&AuxCod);
         						
-        						if(strlen(AuxCod)==12)
+        						if(AuxCod>0)
         						{
         							x=0;
 
-						            while(AuxCod==AuxDisci[x].CodDisc && x<TLD)
+						            while(AuxCod != AuxDisci[x].CodDisc && x<TLD)
 						                x++;
 						                
 						            if(x!=TLD)
@@ -117,7 +117,7 @@ void AtualizaCodDiscluno(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TL
 									{
 										x=0;
 										
-										while(AuxDisci[i].CodDisc==AuxNotas[x].CodDisc && x<TLN)
+										while(AuxDisci[i].CodDisc != AuxNotas[x].CodDisc && x<TLN)
 						                	x++;
 						                	
 						               	if(x==TLN)
@@ -126,7 +126,7 @@ void AtualizaCodDiscluno(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TL
 							            	x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 						            		gotoxy(x,14);
 						                    printf("### Atualizacao Realizada com Sucesso ###");
-						                    strcpy(AuxDisci[i].CodDisc,AuxCod);
+						                    AuxDisci[i].CodDisc==AuxCod;
 							                sleep(3);
 										}
 										else
@@ -159,31 +159,25 @@ void AtualizaCodDiscluno(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TL
 							                    printf("### Atualizacao Realizada com Sucesso ###");
 										
 												for(x=0;x<TLN;x++)
-								                	if(AuxDisci[i].CodDisc==AuxNotas[x].CodDisc)
+								                	if(AuxDisci[i].CodDisc == AuxNotas[x].CodDisc)
 								                		AuxNotas[x].CodDisc=AuxCod;
 								                	
-								                strcpy(AuxDisci[i].CodDisc,AuxCod);
+								                AuxDisci[i].CodDisc=AuxCod;
 								                
-								                strcpy(AuxCod,"-1");
-						                	
-								                sleep(3);
 											}
 										} 						          
 									}
 								} 
-							    else if(strcmp(AuxCod,"0")!=0)
+							    else if(AuxCod<0)
 								{
 									LimparTela(6,23,3,78);
-									x=38-(strlen("### CodDisc Invalido ###")/2);
+									x=38-(strlen("### Codigo Invalido ###")/2);
 						            gotoxy(x,14);
-						            printf("### CodDisc Invalido ###");
+						            printf("### Codigo Invalido ###");
 						            sleep(2);
 						        }
-						        
-						        if(strcmp(AuxCod,"0")==0)
-						        	strcpy(AuxCod,"00");
 						        	
-							}while(strcmp(AuxCod,"00")!=0);
+							}while(AuxCod!=0);
 				    	break;
 				    	
 				    	case 'B':
@@ -198,10 +192,11 @@ void AtualizaCodDiscluno(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TL
 							j=9;
 							    
 							gotoxy(5,j++);
-							printf("Descr Antigo do aluno: %s",AuxDisci[i].Descr);
+							printf("Descricao Antiga da Disciplina: %s",AuxDisci[i].Descr);
 							gotoxy(5,j++);
-							printf("Digite o novo Descr: ");
-        					scanf(" %s",&AuxDescr);
+							printf("Digite a nova Descricao: ");
+							fflush(stdin)
+        					gets(&AuxDescr);
         						
         					if(strcmp(AuxDescr,"0")!=0)
         					{
@@ -228,16 +223,16 @@ void AtualizaCodDiscluno(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TL
 							    j=9;
 							    
 							    gotoxy(5,j++);
-								printf("Codigo antigo da Disciplina: %s",AuxDisci[i].CodDisc);
+								printf("Descricao antiga da Disciplina: %s",AuxDisci[i].CodDisc);
 								gotoxy(5,j++);
-								printf("Digite o novo Codigo: ");
+								printf("Digite a nova Descricao: ");
         						scanf(" %s",&AuxCod);
         						
-        						if(strlen(AuxCod)==12)
+        						if(AuxCod>0)
         						{
         							x=0;
 
-						            while(strcmp(AuxCod,AuxDisci[x].CodDisc)!=0 && x<TLD)
+						            while(AuxCod!=AuxDisci[x].CodDisc && x<TLD)
 						                x++;
 						                
 						            if(x!=TLD)
@@ -251,16 +246,17 @@ void AtualizaCodDiscluno(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TL
 									{
 										x=0;
 										
-										while(strcmp(AuxDisci[i].CodDisc,AuxNotas[x].CodDisc)!=0 && x<TLN)
+										while(AuxDisci[i].CodDisc != AuxNotas[x].CodDisc && x<TLN)
 						                	x++;
 						                	
 						               	if(x==TLN)
 										{
 											gotoxy(5,j++);
-											printf("Descr Antigo do aluno: %s",AuxDisci[i].Descr);
+											printf("Descricao Antiga do Disciplina: %s",AuxDisci[i].Descr);
 											gotoxy(5,j++);
-											printf("Digite o novo Descr: ");
-				        					scanf(" %s",&AuxDescr);
+											printf("Digite o novo Descricao: ");
+				        					fflush(stdion)
+					        				gests(AuxDescr);
 				        						
 				        					if(strcmp(AuxDescr,"0")!=0)
 				        					{
@@ -285,7 +281,7 @@ void AtualizaCodDiscluno(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TL
 											    gotoxy(5,j++);
 											    printf("Essa Disciplina esta cadastrada na tabela Notas");
 											    gotoxy(5,j++);
-											    printf("Ao atualiza-lo o Codigo tambem atualizar a tabela de Notas");
+											    printf("Ao atualiza-lo a Disciplina tambem atualizar a tabela de Notas");
 											    gotoxy(5,j++);
 											    printf("Deseja Atualiza-lo? [S] Sim [N] Nao");
 											    gotoxy(5,++j);
@@ -305,10 +301,11 @@ void AtualizaCodDiscluno(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TL
 												printf("Novo CodDisc: %s",AuxCod);
 												j++;
 												gotoxy(5,j++);
-												printf("Descr Antigo do aluno: %s",AuxDisci[i].Descr);
+												printf("Descricao Antigo do aluno: %s",AuxDisci[i].Descr);
 												gotoxy(5,j++);
-												printf("Digite o novo Descr: ");
-					        					scanf(" %s",&AuxDescr);
+												printf("Digite o novo Descricao: ");
+												fflush(stdion)
+					        					gests(AuxDescr);
 					        						
 					        					if(strcmp(AuxDescr,"0")!=0)
 					        					{
@@ -325,28 +322,25 @@ void AtualizaCodDiscluno(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TL
 										            strcpy(AuxDisci[i].CodDisc,AuxCod);
 										            
 										            sleep(3);
-										            
-										            strcpy(AuxCod,"0");
 												}
 											}
 										} 						          
 									}
 								} 
-							    else if(strcmp(AuxCod,"0")!=0)
+							    else if(AuxCod<0)
 								{
 									LimparTela(6,23,3,78);
-									x=38-(strlen("### CodDisc Invalido ###")/2);
+									x=38-(strlen("### Codigo Invalido ###")/2);
 						            gotoxy(x,14);
-						            printf("### CodDisc Invalido ###");
+						            printf("### Codigo Invalido ###");
 						            sleep(2);
 						        }
 						        
-						        if(strcmp(AuxCod,"0")==0)
-						        	strcpy(AuxCod,"00");
-						        
-							}while(strcmp(AuxCod,"00")!=0);
+							}while(AuxCod!=0);
 				    	break;
 					}
+
+				AuxCod=1;
             }
         }
 		else if(AuxCod<0)
@@ -360,5 +354,5 @@ void AtualizaCodDiscluno(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TL
 		
 		j=9;
 
-    } while(AuxCod<0);
+    } while(AuxCod!=0);
 }
