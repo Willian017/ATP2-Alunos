@@ -4,7 +4,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <windows.h>
-#include <unistd.h>
 
 struct TpAluno
 {
@@ -51,6 +50,44 @@ void Moldura(int CI, int LI, int CF, int LF, int CorT, int CorF)
 	textbackground(0);
 }
 
+void OrdenacaoNome(TpAluno AuxAlunos[30],int TLA)
+{
+	int i, j;
+	char AuxNome[30];
+
+	for(i=TLA;i>0;i--)
+		for(j=0;j<i-1;j++)
+			if(strcmp(AuxAlunos[j].Nome,AuxAlunos[j+1].Nome)==1)
+			{
+				strcpy(AuxNome,AuxAlunos[j].Nome);
+				strcpy(AuxAlunos[j].Nome,AuxAlunos[j+1].Nome);
+				strcpy(AuxAlunos[j+1].Nome,AuxNome);
+
+				strcpy(AuxNome,AuxAlunos[j].RA);
+				strcpy(AuxAlunos[j].RA,AuxAlunos[j+1].RA);
+				strcpy(AuxAlunos[j+1].RA,AuxNome);
+			}
+}
+
+void OrdenacaoDisci(TpDisci AuxDisci[50],int TLD)
+{
+	int i, j,AuxCod;
+	char Descr[30];
+
+	for(i=TLD;i>0;i--)
+		for(j=0;j<i-1;j++)
+			if(strcmp(AuxDisci[j].Descr,AuxDisci[j+1].Descr)==1)
+			{
+				strcpy(Descr,AuxDisci[j].Descr);
+				strcpy(AuxDisci[j].Descr,AuxDisci[j+1].Descr);
+				strcpy(AuxDisci[j+1].Descr,Descr);
+
+				AuxCod=AuxDisci[j].CodDisc;
+				AuxDisci[j].CodDisc=AuxDisci[j+1].CodDisc;
+				AuxDisci[j+1].CodDisc=AuxCod;
+			}
+}
+
 void LimparTela(int LI,int LF,int CI,int CF)
 {
 	int i, j;
@@ -82,6 +119,28 @@ int BuscarDisciplina(TpDisci AuxDisci[50],int &TLD,int AuxCod)
 	return i;
 }
 
+int VerificaRA(char AuxRA[15])
+{
+	int i=0,j;
+
+	if(AuxRA[0]>=48 && AuxRA[0]<=57)
+		if(AuxRA[1]>=48 && AuxRA[1]<=57)
+			if(AuxRA[2]==46)
+				if(AuxRA[3]>=48 && AuxRA[3]<=57)
+					if(AuxRA[4]>=48 && AuxRA[4]<=57)
+						if(AuxRA[5]==46)
+							if(AuxRA[6]>=48 && AuxRA[6]<=57)
+								if(AuxRA[7]>=48 && AuxRA[7]<=57)
+									if(AuxRA[8]>=48 && AuxRA[8]<=57)
+										if(AuxRA[9]>=48 && AuxRA[9]<=57)
+											if(AuxRA[10]==45)
+												if(AuxRA[11]>=48 && AuxRA[11]<=57)
+													i=1;
+
+	return i;
+
+}
+
 void Adicionar(TpAluno AuxAlunos[30], int &TLA,TpDisci AuxDisci[50], int &TLD,TpNota AuxNotas[30], int &TLN)
 {
     int i=0,k=0;
@@ -99,12 +158,12 @@ void Adicionar(TpAluno AuxAlunos[30], int &TLA,TpDisci AuxDisci[50], int &TLD,Tp
 		TLA++;
 		
 		strcpy(AuxAlunos[TLA].Nome,"Maria");
-		strcpy(AuxAlunos[TLA].RA,"13.78.1921-1");
+		strcpy(AuxAlunos[TLA].RA,"26.24.1296-9");
 		
 		TLA++;
 		
 		strcpy(AuxAlunos[TLA].Nome,"Leonardo");
-		strcpy(AuxAlunos[TLA].RA,"01.12.9876-3");
+		strcpy(AuxAlunos[TLA].RA,"26.24.1172-5");
 		
 		TLA++;
 		
@@ -151,30 +210,36 @@ void Adicionar(TpAluno AuxAlunos[30], int &TLA,TpDisci AuxDisci[50], int &TLD,Tp
 		
 		strcpy(AuxNotas[TLN].RA,"26.24.1121-1");
 		AuxNotas[TLN].CodDisc = 101;
-		AuxNotas[TLN].Nota = 5;
+		AuxNotas[TLN].Nota = 7;
 		
 		TLN++;
+
+		strcpy(AuxNotas[TLN].RA,"26.24.1296-9");
+		AuxNotas[TLN].CodDisc = 107;
+		AuxNotas[TLN].Nota = 6.3;
+
+		TLN++;
 		
-		strcpy(AuxNotas[TLN].RA,"13.78.1921-1");
+		strcpy(AuxNotas[TLN].RA,"26.24.1296-9");
 		AuxNotas[TLN].CodDisc = 99;
 		AuxNotas[TLN].Nota = 7;
 
 		TLN++;
 
-		strcpy(AuxNotas[TLN].RA,"01.12.9876-3");
+		strcpy(AuxNotas[TLN].RA,"26.24.1172-5");
 		AuxNotas[TLN].CodDisc = 99;
 		AuxNotas[TLN].Nota = 5.5;
 
 		TLN++;
 		
-		strcpy(AuxNotas[TLN].RA,"01.12.9876-3");
-		AuxNotas[TLN].CodDisc = 100;
+		strcpy(AuxNotas[TLN].RA,"26.24.1172-5");
+		AuxNotas[TLN].CodDisc = 105;
 		AuxNotas[TLN].Nota = 10;
 
 		TLN++;
 
 		strcpy(AuxNotas[TLN].RA,"22.23.1421-1");
-		AuxNotas[TLN].CodDisc = 99;
+		AuxNotas[TLN].CodDisc = 107;
 		AuxNotas[TLN].Nota = 4;
 		
 		TLN++;
@@ -190,6 +255,24 @@ void Adicionar(TpAluno AuxAlunos[30], int &TLA,TpDisci AuxDisci[50], int &TLD,Tp
 		AuxNotas[TLN].Nota = 8;
 
 		TLN++;
+
+		strcpy(AuxNotas[TLN].RA,"88.12.3321-7");
+		AuxNotas[TLN].CodDisc = 101;
+		AuxNotas[TLN].Nota = 8;
+
+		TLN++;
+
+		strcpy(AuxNotas[TLN].RA,"88.12.3321-7");
+		AuxNotas[TLN].CodDisc = 105;
+		AuxNotas[TLN].Nota = 4;
+
+		TLN++;
+
+		strcpy(AuxNotas[TLN].RA,"88.12.3321-7");
+		AuxNotas[TLN].CodDisc = 107;
+		AuxNotas[TLN].Nota = 5.8;
+
+		TLN++;
 	}
 }
 
@@ -200,7 +283,7 @@ void CadastroAluno(TpAluno AuxAlunos[30],int &TLA)
 
     do
     {
-    	LimparTela(2,23,3,78);
+    	LimparTela(2,24,2,79);
     	
     	Moldura(1,1,80,25,1,3);
 
@@ -214,17 +297,17 @@ void CadastroAluno(TpAluno AuxAlunos[30],int &TLA)
         printf("Digite o RA do Aluno(Ex: 26.24.1121-1): ");
         scanf(" %s",&AuxRA);
 
-        if(strlen(AuxRA)==12)
+        if(strlen(AuxRA)==12 && VerificaRA(AuxRA)==1)
         {
             i=BuscarAluno(AuxAlunos,TLA,AuxRA);
 			
             if(i!=TLA)
             {
-            	LimparTela(2,23,3,78);
+            	LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
             	gotoxy(4,13);
                 printf("### Nao foi possivel cadastrar esse RA, ele ja esta presente no Sistema ###");
-                sleep(3);
+                Sleep(3000);
             }
             else
             {
@@ -235,21 +318,21 @@ void CadastroAluno(TpAluno AuxAlunos[30],int &TLA)
 				
                 if(strcmp(AuxNome,"0")==0)
                 {
-                	LimparTela(2,23,3,78);
+                	LimparTela(2,24,2,79);
 					Moldura(1,1,80,25,1,3);
 	            	x=38-(strlen("### Nome Invalido ###")/2);
             		gotoxy(x,13);
                     printf("### Nome Invalido ###");;
-	                sleep(2);
+	                Sleep(2000);
             	}
                 else
                 {    
-                	LimparTela(2,23,3,78);
+                	LimparTela(2,24,2,79);
 					Moldura(1,1,80,25,1,3);
 	            	x=38-(strlen("### Cadastro Realizado Com Sucesso ###")/2);
             		gotoxy(x,13);
                     printf("### Cadastro Realizado Com Sucesso ###");;
-	                sleep(3);
+	                Sleep(3000);
                     strcpy(AuxAlunos[TLA].RA,AuxRA);
                     strcpy(AuxAlunos[TLA].Nome,AuxNome);
                     TLA++;
@@ -258,12 +341,12 @@ void CadastroAluno(TpAluno AuxAlunos[30],int &TLA)
         }
 		else if(strcmp(AuxRA,"0")!=0)
 		{
-			LimparTela(2,23,3,78);
+			LimparTela(2,24,2,79);
 			Moldura(1,1,80,25,1,3);
 			x=38-(strlen("### RA Invalido ###")/2);
             gotoxy(x,13);
             printf("### RA Invalido ###");
-            sleep(2);
+            Sleep(2000);
         }
 		
 		j=7;
@@ -278,7 +361,7 @@ void CadastroDisci(TpDisci AuxDisci[50],int &TLD)
     
     do
     {
-    	LimparTela(2,23,3,78);
+    	LimparTela(2,24,2,79);
     	Moldura(1,1,80,25,1,3);
 	    x=38-(strlen("### Cadastro de Disciplinas ###")/2);
 	    gotoxy(x,3);
@@ -298,11 +381,11 @@ void CadastroDisci(TpDisci AuxDisci[50],int &TLD)
 			
             if(i!=TLD)
             {
-            	LimparTela(2,23,3,78);
+            	LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
             	gotoxy(4,13);
                 printf("### Nao foi possivel cadastrar a Disciplina, ela ja esta no Sistema ###");
-                sleep(2);
+                Sleep(2000);
             }
             else
             {
@@ -313,21 +396,21 @@ void CadastroDisci(TpDisci AuxDisci[50],int &TLD)
 				
                 if(strcmp(AuxDescr,"0")==0)
                 {
-                	LimparTela(2,23,3,78);
+                	LimparTela(2,24,2,79);
 					Moldura(1,1,80,25,1,3);
                 	x=38-(strlen("### Nome Invalido ###")/2);
             		gotoxy(x,13);
                     printf("### Nome Invalido ###");
-                    sleep(2);
+                    Sleep(2000);
             	}
                 else
                 {    
-                	LimparTela(2,23,3,78);
+                	LimparTela(2,24,2,79);
 					Moldura(1,1,80,25,1,3);
 	            	x=38-(strlen("### Cadastro Realizado Com Sucesso ###")/2);
             		gotoxy(x,13);
                     printf("### Cadastro Realizado Com Sucesso ###");;
-	                sleep(3);
+	                Sleep(3000);
                     AuxDisci[TLD].CodDisc=AuxCod;
                     strcpy(AuxDisci[TLD].Descr,AuxDescr);
                     TLD++;
@@ -336,12 +419,12 @@ void CadastroDisci(TpDisci AuxDisci[50],int &TLD)
         }
 		else if(AuxCod!=0)
 		{
-			LimparTela(2,23,3,78);
+			LimparTela(2,24,2,79);
 			Moldura(1,1,80,25,1,3);
 			x=38-(strlen("### Codigo Invalido ###")/2);
             gotoxy(x,13);
             printf("### Codigo Invalido ###");
-            sleep(2);
+            Sleep(2000);
         }
 		
 		j=7;
@@ -357,7 +440,7 @@ void CadastroNota(TpNota AuxNota[30],int &TLN,TpAluno AuxAlunos[30],int TLA,TpDi
     
     do
     {
-    	LimparTela(2,23,3,78);
+    	LimparTela(2,24,2,79);
     	Moldura(1,1,80,25,1,3);
 	    x=38-(strlen("### Cadastro de Notas ###")/2);
 	    gotoxy(x,3);
@@ -370,19 +453,19 @@ void CadastroNota(TpNota AuxNota[30],int &TLN,TpAluno AuxAlunos[30],int TLA,TpDi
         printf("Digite o RA do aluno: ");
         scanf(" %s",&AuxRA);
 
-        if(strlen(AuxRA)==12)
+        if(strlen(AuxRA)==12 && VerificaRA(AuxRA))
         {
 
             i=BuscarAluno(AuxAlunos,TLA,AuxRA);	
 			
             if(i==TLA)
             {
-            	LimparTela(2,23,3,78);
+            	LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
 	    		x=38-(strlen("### Esse Aluno nao esta existe ###")/2);
             	gotoxy(x,13);
                 printf("### Esse Aluno nao esta existe ###");
-                sleep(2);
+                Sleep(2000);
             }
             else
             {
@@ -410,14 +493,14 @@ void CadastroNota(TpNota AuxNota[30],int &TLN,TpAluno AuxAlunos[30],int TLA,TpDi
 	                
 					if(i==TLD && AuxCod>0)	
 					{
-		                LimparTela(2,23,3,78);
+		                LimparTela(2,24,2,79);
 						Moldura(1,1,80,25,1,3);
 				    	x=38-(strlen("### Essa Disciplina nao esta existe, tente novamente ###")/2);
 			           	gotoxy(x,13);
 			            printf("### Essa Disciplina nao esta existe, tente novamente ###");
-			            sleep(3);
+			            Sleep(3000);
 			            
-			            LimparTela(2,23,3,78);
+			            LimparTela(2,24,2,79);
 						Moldura(1,1,80,25,1,3);
 					    x=38-(strlen("### Cadastro de Notas ###")/2);
 					    gotoxy(x,3);
@@ -465,14 +548,14 @@ void CadastroNota(TpNota AuxNota[30],int &TLN,TpAluno AuxAlunos[30],int TLA,TpDi
 		                
 						if(AuxNotas<0 || AuxNotas>10)	
 						{
-			                LimparTela(2,23,3,78);
+			                LimparTela(2,24,2,79);
 							Moldura(1,1,80,25,1,3);
 					    	x=38-(strlen("### Essa Nota esta fora dos parametros corretos ###")/2);
 				           	gotoxy(x,13);
 				            printf("### Essa Nota esta fora dos parametros corretos ###");
-				            sleep(3);
+				            Sleep(3000);
 				            
-				            LimparTela(2,23,3,78);
+				            LimparTela(2,24,2,79);
 							Moldura(1,1,80,25,1,3);
 						    x=38-(strlen("### Cadastro de Notas ###")/2);
 						    gotoxy(x,3);
@@ -483,12 +566,12 @@ void CadastroNota(TpNota AuxNota[30],int &TLN,TpAluno AuxAlunos[30],int TLA,TpDi
 						}	
 		        	}while(AuxNotas<0 || AuxNotas>10);
 		        	
-		        	LimparTela(2,23,3,78);
+		        	LimparTela(2,24,2,79);
 					Moldura(1,1,80,25,1,3);
 	            	x=38-(strlen("### Cadastro Realizado Com Sucesso ###")/2);
             		gotoxy(x,13);
                     printf("### Cadastro Realizado Com Sucesso ###");;
-	                sleep(3);
+	                Sleep(3000);
 		        	strcpy(AuxNota[TLN].RA, AuxRA);
 		        	AuxNota[TLN].CodDisc=AuxCod;
 		        	AuxNota[TLN].Nota=AuxNotas;
@@ -497,23 +580,23 @@ void CadastroNota(TpNota AuxNota[30],int &TLN,TpAluno AuxAlunos[30],int TLA,TpDi
 		    	}
 		    	else if(x!=TLN)
 		    	{
-		    		LimparTela(2,23,3,78);
+		    		LimparTela(2,24,2,79);
 					Moldura(1,1,80,25,1,3);
 					x=38-(strlen("### Nota ja cadastrada ###")/2);
 		            gotoxy(x,13);
 		            printf("### Nota ja cadastrada ###");
-		            sleep(2);
+		            Sleep(2000);
 				}
             }
         }
 		else if(strcmp(AuxRA,"0")!=0)
 		{
-			LimparTela(2,23,3,78);
+			LimparTela(2,24,2,79);
 			Moldura(1,1,80,25,1,3);
 			x=38-(strlen("### RA Invalido ###")/2);
             gotoxy(x,13);
             printf("### RA Invalido ###");
-            sleep(2);
+            Sleep(2000);
         }
         		    
 		j=7;
@@ -529,7 +612,7 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 
     do
     {
-    	LimparTela(2,23,3,78);
+    	LimparTela(2,24,2,79);
 		Moldura(1,1,80,25,1,3);
     	x=38-(strlen("### Atualizar Aluno ###")/2);
 	    gotoxy(x,3);
@@ -541,32 +624,32 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
         printf("Digite o RA do Aluno: ");
         scanf(" %s",&AuxRA);
 
-        if(strlen(AuxRA)==12)
+        if(strlen(AuxRA)==12 && VerificaRA(AuxRA))
         {
 
         	i=BuscarAluno(AuxAlunos,TLA,AuxRA);
 
             if(i==TLA)
             {
-            	LimparTela(2,23,3,78);
+            	LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
             	x=38-(strlen("### Esse Aluno nao esta cadastrado no sistema ###")/2);
 				gotoxy(x,13);
                 printf("### Esse Aluno nao esta cadastrado no sistema ###");
-                sleep(3);
+                Sleep(3000);
             }
             else
             {
-            	LimparTela(2,23,3,78);
+            	LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
 	            x=38-(strlen("### Aluno Encontrado ###")/2);
             	gotoxy(x,13);
                 printf("### Aluno Encontrado ###");;
-	            sleep(2);
+	            Sleep(2000);
 	            
 	            j=7;
 	            
-	            LimparTela(2,23,3,78);
+	            LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
 		    	x=38-(strlen("### Atualizar Aluno ###")/2);
 			    gotoxy(x,3);
@@ -606,7 +689,7 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 				    	case 'A':
 				    		do
 							{
-					    		LimparTela(2,23,3,78);
+					    		LimparTela(2,24,2,79);
 								Moldura(1,1,80,25,1,3);
 						    	x=38-(strlen("### Atualizar Aluno ###")/2);
 							    gotoxy(x,3);
@@ -623,19 +706,19 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 								printf("Digite o novo RA: ");
         						scanf(" %s",&AuxRA);
         						
-        						if(strlen(AuxRA)==12)
+        						if(strlen(AuxRA)==12 && VerificaRA(AuxRA))
         						{
 
         							x=BuscarAluno(AuxAlunos,TLA,AuxRA);
 						                
 						            if(x!=TLA)
 						            {
-						            	LimparTela(2,23,3,78);
+						            	LimparTela(2,24,2,79);
 										Moldura(1,1,80,25,1,3);
 						            	x=38-(strlen("### Esse RA ja esta cadastrado no sistema ###")/2);
 						            	gotoxy(x,13);
 						                printf("### Esse RA ja esta cadastrado no sistema ###");
-						                sleep(3);
+						                Sleep(3000);
 									}
 									else
 									{
@@ -646,20 +729,20 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 						                	
 						               	if(x==TLN)
 										{
-											LimparTela(2,23,3,78);
+											LimparTela(2,24,2,79);
 											Moldura(1,1,80,25,1,3);
 							            	x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 						            		gotoxy(x,13);
 						                    printf("### Atualizacao Realizada com Sucesso ###");
 						                    strcpy(AuxAlunos[i].RA,AuxRA);
-							                sleep(3);
+							                Sleep(3000);
 										}
 										else
 										{
 											do
 											{			
 												j=7;	
-												LimparTela(2,23,3,78);
+												LimparTela(2,24,2,79);
 												Moldura(1,1,80,25,1,3);
 												x=38-(strlen("### Atualizar Aluno ###")/2);
 											    gotoxy(x,3);
@@ -679,7 +762,7 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 											
 											if(menu==83)
 											{
-												LimparTela(2,23,3,78);
+												LimparTela(2,24,2,79);
 												Moldura(1,1,80,25,1,3);
 								            	x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 							            		gotoxy(x,13);
@@ -693,7 +776,7 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 								                
 								                strcpy(AuxRA,"0");
 						                	
-								                sleep(3);
+								                Sleep(3000);
 											}
 										}
 										
@@ -702,12 +785,12 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 								} 
 							    else if(strcmp(AuxRA,"0")!=0)
 								{
-									LimparTela(2,23,3,78);
+									LimparTela(2,24,2,79);
 									Moldura(1,1,80,25,1,3);
 									x=38-(strlen("### RA Invalido ###")/2);
 						            gotoxy(x,13);
 						            printf("### RA Invalido ###");
-						            sleep(2);
+						            Sleep(2000);
 						        }
 						        
 						        	
@@ -715,7 +798,7 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 				    	break;
 				    	
 				    	case 'B':
-					    	LimparTela(2,23,3,78);
+					    	LimparTela(2,24,2,79);
 							Moldura(1,1,80,25,1,3);
 						   	x=38-(strlen("### Atualizar Aluno ###")/2);
 						    gotoxy(x,3);
@@ -735,20 +818,20 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
         						
         					if(strcmp(AuxNome,"0")!=0)
         					{
-								LimparTela(2,23,3,78);
+								LimparTela(2,24,2,79);
 								Moldura(1,1,80,25,1,3);
 						        x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 					           	gotoxy(x,13);
 					            printf("### Atualizacao Realizada com Sucesso ###");
 					            strcpy(AuxAlunos[i].Nome,AuxNome);
-					            sleep(3);
+					            Sleep(3000);
 							}
 				    	break;
 				    	
 				    	case 'C':
 				    		do
 							{
-					    		LimparTela(2,23,3,78);
+					    		LimparTela(2,24,2,79);
 								Moldura(1,1,80,25,1,3);
 						    	x=38-(strlen("### Atualizar Aluno ###")/2);
 							    gotoxy(x,3);
@@ -765,18 +848,18 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 								printf("Digite o novo RA: ");
         						scanf(" %s",&AuxRA);
         						
-        						if(strlen(AuxRA)==12)
+        						if(strlen(AuxRA)==12 && VerificaRA(AuxRA))
         						{
 
 									x=BuscarAluno(AuxAlunos,TLA,AuxRA);
 						                
 						            if(x!=TLA)
 						            {
-						            	LimparTela(2,23,3,78);
+						            	LimparTela(2,24,2,79);
 										Moldura(1,1,80,25,1,3);
 						            	gotoxy(4,13);
 						                printf("### Esse RA ja esta cadastrado no sistema ###");
-						                sleep(3);
+						                Sleep(3000);
 									}
 									else
 									{
@@ -796,21 +879,21 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 				        						
 				        					if(strcmp(AuxNome,"0")!=0)
 				        					{
-												LimparTela(2,23,3,78);
+												LimparTela(2,24,2,79);
 												Moldura(1,1,80,25,1,3);
 										        x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 									           	gotoxy(x,13);
 									            printf("### Atualizacao Realizada com Sucesso ###");
 									            strcpy(AuxAlunos[i].Nome,AuxNome);
 									            strcpy(AuxAlunos[i].RA,AuxRA);
-									            sleep(3);
+									            Sleep(3000);
 											}
 										}
 										else
 										{
 											do
 											{				
-												LimparTela(2,23,3,78);
+												LimparTela(2,24,2,79);
 												Moldura(1,1,80,25,1,3);
 												x=38-(strlen("### Atualizar Aluno ###")/2);
 											    gotoxy(x,3);
@@ -834,7 +917,7 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 											
 											if(menu==83)
 											{
-												LimparTela(2,23,3,78);
+												LimparTela(2,24,2,79);
 												Moldura(1,1,80,25,1,3);
 												j=7;
 												gotoxy(5,j++);
@@ -850,7 +933,7 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 					        						
 					        					if(strcmp(AuxNome,"0")!=0)
 					        					{
-													LimparTela(2,23,3,78);
+													LimparTela(2,24,2,79);
 													Moldura(1,1,80,25,1,3);
 											        x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 										           	gotoxy(x,13);
@@ -863,7 +946,7 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 										            strcpy(AuxAlunos[i].Nome,AuxNome);
 										            strcpy(AuxAlunos[i].RA,AuxRA);
 										            
-										            sleep(3);
+										            Sleep(3000);
 										            
 										            
 												}
@@ -874,12 +957,12 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
 								} 
 							    else if(strcmp(AuxRA,"0")!=0)
 								{
-									LimparTela(2,23,3,78);
+									LimparTela(2,24,2,79);
 									Moldura(1,1,80,25,1,3);
 									x=38-(strlen("### RA Invalido ###")/2);
 						            gotoxy(x,13);
 						            printf("### RA Invalido ###");
-						            sleep(2);
+						            Sleep(2000);
 						        }
 						        
 						        
@@ -892,12 +975,12 @@ void AtualizarAluno(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int TLN)
         }
 		else if(strcmp(AuxRA,"0")!=0)
 		{
-			LimparTela(2,23,3,78);
+			LimparTela(2,24,2,79);
 			Moldura(1,1,80,25,1,3);
 			x=38-(strlen("### RA Invalido ###")/2);
             gotoxy(x,13);
             printf("### RA Invalido ###");
-            sleep(2);
+            Sleep(2000);
         }
 		
 		j=7;
@@ -913,7 +996,7 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 
     do
     {
-    	LimparTela(2,23,3,78);
+    	LimparTela(2,24,2,79);
 		Moldura(1,1,80,25,1,3);
     	x=38-(strlen("### Atualizar Disciplina ###")/2);
 	    gotoxy(x,3);
@@ -932,25 +1015,25 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 			
             if(i==TLD)
             {
-            	LimparTela(2,23,3,78);
+            	LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
             	x=38-(strlen("### Essa Disciplina nao esta cadastrado no sistema ###")/2);
 				gotoxy(x,13);
                 printf("### Essa Disciplina nao esta cadastrado no sistema ###");
-                sleep(3);
+                Sleep(3000);
             }
             else
             {
-            	LimparTela(2,23,3,78);
+            	LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
 	            x=38-(strlen("### Disciplina Encontrada ###")/2);
             	gotoxy(x,13);
                 printf("### Disciplina Encontrada ###");;
-	            sleep(2);
+	            Sleep(2000);
 	            
 	            j=7;
 	            
-	            LimparTela(2,23,3,78);
+	            LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
 		    	x=38-(strlen("### Atualizar Disciplina ###")/2);
 			    gotoxy(x,3);
@@ -990,7 +1073,7 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 				    	case 'A':
 				    		do
 							{
-					    		LimparTela(2,23,3,78);
+					    		LimparTela(2,24,2,79);
 								Moldura(1,1,80,25,1,3);
 						    	x=38-(strlen("### Atualizar Disciplina ###")/2);
 							    gotoxy(x,3);
@@ -1016,12 +1099,12 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 						                
 						            if(x!=TLD)
 						            {
-						            	LimparTela(2,23,3,78);
+						            	LimparTela(2,24,2,79);
 										Moldura(1,1,80,25,1,3);
 						            	x=38-(strlen("### Esse Codigo ja esta cadastrado no sistema ###")/2);
 						            	gotoxy(x,13);
 						                printf("### Esse Codigo ja esta cadastrado no sistema ###");
-						                sleep(3);
+						                Sleep(3000);
 									}
 									else
 									{
@@ -1032,20 +1115,20 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 						                	
 						               	if(x==TLN)
 										{
-											LimparTela(2,23,3,78);
+											LimparTela(2,24,2,79);
 											Moldura(1,1,80,25,1,3);
 							            	x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 						            		gotoxy(x,13);
 						                    printf("### Atualizacao Realizada com Sucesso ###");
 						                    AuxDisci[i].CodDisc==AuxCod;
-							                sleep(3);
+							                Sleep(3000);
 										}
 										else
 										{
 											do
 											{			
 												j=7;	
-												LimparTela(2,23,3,78);
+												LimparTela(2,24,2,79);
 												Moldura(1,1,80,25,1,3);
 												x=38-(strlen("### Atualizar Disciplina ###")/2);
 											    gotoxy(x,3);
@@ -1065,7 +1148,7 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 											
 											if(menu==83)
 											{
-												LimparTela(2,23,3,78);
+												LimparTela(2,24,2,79);
 												Moldura(1,1,80,25,1,3);
 								            	x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 							            		gotoxy(x,13);
@@ -1086,12 +1169,12 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 								} 
 							    else if(AuxCod<0)
 								{
-									LimparTela(2,23,3,78);
+									LimparTela(2,24,2,79);
 									Moldura(1,1,80,25,1,3);
 									x=38-(strlen("### Codigo Invalido ###")/2);
 						            gotoxy(x,13);
 						            printf("### Codigo Invalido ###");
-						            sleep(2);
+						            Sleep(2000);
 						        }
 						        
 						        
@@ -1100,7 +1183,7 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 				    	break;
 				    	
 				    	case 'B':
-					    	LimparTela(2,23,3,78);
+					    	LimparTela(2,24,2,79);
 							Moldura(1,1,80,25,1,3);
 						   	x=38-(strlen("### Atualizar Disciplina ###")/2);
 						    gotoxy(x,3);
@@ -1120,20 +1203,20 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
         						
         					if(strcmp(AuxDescr,"0")!=0)
         					{
-								LimparTela(2,23,3,78);
+								LimparTela(2,24,2,79);
 								Moldura(1,1,80,25,1,3);
 						        x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 					           	gotoxy(x,13);
 					            printf("### Atualizacao Realizada com Sucesso ###");
 					            strcpy(AuxDisci[i].Descr,AuxDescr);
-					            sleep(3);
+					            Sleep(3000);
 							}
 				    	break;
 				    	
 				    	case 'C':
 				    		do
 							{
-					    		LimparTela(2,23,3,78);
+					    		LimparTela(2,24,2,79);
 								Moldura(1,1,80,25,1,3);
 						    	x=38-(strlen("### Atualizar Disciplina ###")/2);
 							    gotoxy(x,3);
@@ -1159,11 +1242,11 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 						                
 						            if(x!=TLD)
 						            {
-						            	LimparTela(2,23,3,78);
+						            	LimparTela(2,24,2,79);
 										Moldura(1,1,80,25,1,3);
 						            	gotoxy(4,13);
 						                printf("### Esse Codigo ja esta cadastrado no sistema ###");
-						                sleep(3);
+						                Sleep(3000);
 									}
 									else
 									{
@@ -1183,21 +1266,21 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 				        						
 				        					if(strcmp(AuxDescr,"0")!=0)
 				        					{
-												LimparTela(2,23,3,78);
+												LimparTela(2,24,2,79);
 												Moldura(1,1,80,25,1,3);
 										        x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 									           	gotoxy(x,13);
 									            printf("### Atualizacao Realizada com Sucesso ###");
 									            strcpy(AuxDisci[i].Descr,AuxDescr);
 									            AuxDisci[i].CodDisc=AuxCod;
-									            sleep(3);
+									            Sleep(3000);
 											}
 										}
 										else
 										{
 											do
 											{				
-												LimparTela(2,23,3,78);
+												LimparTela(2,24,2,79);
 												Moldura(1,1,80,25,1,3);
 												x=38-(strlen("### Atualizar Disciplina ###")/2);
 											    gotoxy(x,3);
@@ -1218,7 +1301,7 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 											
 											if(menu==83)
 											{
-												LimparTela(2,23,3,78);
+												LimparTela(2,24,2,79);
 												Moldura(1,1,80,25,1,3);
 												j=7;
 												gotoxy(5,j++);
@@ -1235,7 +1318,7 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 					        						
 					        					if(strcmp(AuxDescr,"0")!=0)
 					        					{
-													LimparTela(2,23,3,78);
+													LimparTela(2,24,2,79);
 													Moldura(1,1,80,25,1,3);
 											        x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 										           	gotoxy(x,13);
@@ -1248,7 +1331,7 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 										            strcpy(AuxDisci[i].Descr,AuxDescr);
 										            AuxDisci[i].CodDisc=AuxCod;
 										            
-										            sleep(3);
+										            Sleep(3000);
 												}
 											}
 											AuxCod=0;
@@ -1257,12 +1340,12 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
 								} 
 							    else if(AuxCod<0)
 								{
-									LimparTela(2,23,3,78);
+									LimparTela(2,24,2,79);
 									Moldura(1,1,80,25,1,3);
 									x=38-(strlen("### Codigo Invalido ###")/2);
 						            gotoxy(x,13);
 						            printf("### Codigo Invalido ###");
-						            sleep(2);
+						            Sleep(2000);
 						        }
 						        
 							}while(AuxCod!=0);
@@ -1274,12 +1357,12 @@ void AtualizarDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[30],int TLN)
         }
 		else if(AuxCod<0)
 		{
-			LimparTela(2,23,3,78);
+			LimparTela(2,24,2,79);
 			Moldura(1,1,80,25,1,3);
 			x=38-(strlen("### Codigo Invalido ###")/2);
             gotoxy(x,13);
             printf("### Codigo Invalido ###");
-            sleep(2);
+            Sleep(2000);
         }
 		
 		j=7;
@@ -1297,7 +1380,7 @@ void AtualizarNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,Tp
 
     do
     {
-    	LimparTela(2,23,3,78);
+    	LimparTela(2,24,2,79);
 		Moldura(1,1,80,25,1,3);
     	x=38-(strlen("### Atualizar Notas ###")/2);
 	    gotoxy(x,3);
@@ -1309,7 +1392,7 @@ void AtualizarNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,Tp
         printf("Digite o RA do Aluno: ");
         scanf(" %s",&AuxRA);
         
-        if(strlen(AuxRA)==12)
+        if(strlen(AuxRA)==12 && VerificaRA(AuxRA))
         {
             i=0;
 
@@ -1317,27 +1400,27 @@ void AtualizarNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,Tp
                 i++;
 			
 			
-            if(i==TLA)
+            if(i==TLN)
             {
-            	LimparTela(2,23,3,78);
+            	LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
             	x=38-(strlen("### Nao existem Notas desse RA cadastradas no sistema ###")/2);
 				gotoxy(x,13);
                 printf("### Nao existem Notas desse RA cadastradas no sistema ###");
-                sleep(3);
+                Sleep(3000);
             }
             else
             {
-		            LimparTela(2,23,3,78);
+		            LimparTela(2,24,2,79);
 					Moldura(1,1,80,25,1,3);
 			        x=38-(strlen("### Aluno Encontrado ###")/2);
 		            gotoxy(x,13);
 		            printf("### Aluno Encontrado ###");;
-			        sleep(2);
+			        Sleep(2000);
 			            
 			        j=7;
 			            
-			        LimparTela(2,23,3,78);
+			        LimparTela(2,24,2,79);
 					Moldura(1,1,80,25,1,3);
 				   	x=38-(strlen("### Atualizar Notas ###")/2);
 					gotoxy(x,3);
@@ -1380,16 +1463,16 @@ void AtualizarNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,Tp
 						
 					if(k!=TLN)
 					{
-						LimparTela(2,23,3,78);
+						LimparTela(2,24,2,79);
 						Moldura(1,1,80,25,1,3);
 				        x=38-(strlen("### Nota Encontrada ###")/2);
 			            gotoxy(x,13);
 			            printf("### Nota Encontrada ###");;
-				        sleep(2);
+				        Sleep(2000);
 				        
 				        j=7;
 	            
-			            LimparTela(2,23,3,78);
+			            LimparTela(2,24,2,79);
 						Moldura(1,1,80,25,1,3);
 				    	x=38-(strlen("### Atualizar Notas ###")/2);
 					    gotoxy(x,3);
@@ -1433,7 +1516,7 @@ void AtualizarNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,Tp
 					    		{
 					    			j=7;
 	            
-						            LimparTela(2,23,3,78);
+						            LimparTela(2,24,2,79);
 									Moldura(1,1,80,25,1,3);
 							    	x=38-(strlen("### Atualizar Notas ###")/2);
 								    gotoxy(x,3);
@@ -1457,7 +1540,7 @@ void AtualizarNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,Tp
 								    fflush(stdin);
 								    gets(AuxRA);
 								    
-								    if(strlen(AuxRA)==12)
+								    if(strlen(AuxRA)==12 && VerificaRA(AuxRA))
 								    {
 								    	i=0;
 								    	
@@ -1466,17 +1549,17 @@ void AtualizarNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,Tp
 								    		
 								    	if(i==TLA)
 										{
-											LimparTela(2,23,3,78);
+											LimparTela(2,24,2,79);
 											Moldura(1,1,80,25,1,3);
 								           	x=38-(strlen("### Nao existe esse RA no sistema ###")/2);
 											gotoxy(x,13);
 								            printf("### Nao existe esse RA no sistema ###");
-								            sleep(3);
+								            Sleep(3000);
 										}
 										else
 										{
 											
-											LimparTela(2,23,3,78);
+											LimparTela(2,24,2,79);
 											Moldura(1,1,80,25,1,3);
 								            x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 							            	gotoxy(x,13);
@@ -1486,17 +1569,17 @@ void AtualizarNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,Tp
 								                
 								            strcpy(AuxRA,"0");
 						                   
-											sleep(3);
+											Sleep(3000);
 										}		
 									}
 								    else if(strcmp(AuxRA,"0")!=0)
 								    {
-								    	LimparTela(2,23,3,78);
+								    	LimparTela(2,24,2,79);
 										Moldura(1,1,80,25,1,3);
 										x=38-(strlen("### RA Invalido ###")/2);
 							            gotoxy(x,13);
 							            printf("### RA Invalido ###");
-							            sleep(2);
+							            Sleep(2000);
 									}
 								    
 								}while(strcmp(AuxRA,"0")!=0);
@@ -1507,7 +1590,7 @@ void AtualizarNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,Tp
 					    		{
 					    			j=7;
 	            
-						            LimparTela(2,23,3,78);
+						            LimparTela(2,24,2,79);
 									Moldura(1,1,80,25,1,3);
 							    	x=38-(strlen("### Atualizar Notas ###")/2);
 								    gotoxy(x,3);
@@ -1537,39 +1620,39 @@ void AtualizarNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,Tp
 								    	while(AuxCod != AuxDisci[i].CodDisc && i<TLD)
 								    		i++;
 								    		
-								    	if(i==TLA)
+								    	if(i==TLD)
 										{
-											LimparTela(2,23,3,78);
+											LimparTela(2,24,2,79);
 											Moldura(1,1,80,25,1,3);
 								           	x=38-(strlen("### Nao existe esse Codigo no sistema ###")/2);
 											gotoxy(x,13);
 								            printf("### Nao existe esse Codigo no sistema ###");
-								            sleep(3);
+								            Sleep(3000);
 										}
 										else
 										{
 											
-											LimparTela(2,23,3,78);
+											LimparTela(2,24,2,79);
 											Moldura(1,1,80,25,1,3);
 								            x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 							            	gotoxy(x,13);
 							                printf("### Atualizacao Realizada com Sucesso ###");
 								                	
-								            AuxNotas[x].CodDisc = AuxCod;
+								            AuxNotas[k].CodDisc = AuxCod;
 								                
 								            AuxCod = 0;
 						                   
-											sleep(3);
+											Sleep(3000);
 										}		
 									}
 								    else if(AuxCod!=0)
 								    {
-								    	LimparTela(2,23,3,78);
+								    	LimparTela(2,24,2,79);
 										Moldura(1,1,80,25,1,3);
 										x=38-(strlen("### Codigo Invalido ###")/2);
 							            gotoxy(x,13);
 							            printf("### Codigo Invalido ###");
-							            sleep(2);
+							            Sleep(2000);
 									}
 								    
 								}while(AuxCod!=0);
@@ -1580,7 +1663,7 @@ void AtualizarNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,Tp
 					    		{
 					    			j=7;
 	            
-						            LimparTela(2,23,3,78);
+						            LimparTela(2,24,2,79);
 									Moldura(1,1,80,25,1,3);
 							    	x=38-(strlen("### Atualizar Notas ###")/2);
 								    gotoxy(x,3);
@@ -1600,28 +1683,28 @@ void AtualizarNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,Tp
 								    printf("Digite a nova Nota: ");
 								    scanf(" %f",&AuxNota);
 								    
-								    if(AuxCod>0)
+								    if(AuxNota>=0  && AuxNota<=10)
 								    {		
-										LimparTela(2,23,3,78);
+										LimparTela(2,24,2,79);
 										Moldura(1,1,80,25,1,3);
 							            x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
 						            	gotoxy(x,13);
 						                printf("### Atualizacao Realizada com Sucesso ###");
 								                	
-							            AuxNotas[x].Nota = AuxNota;
+							            AuxNotas[k].Nota = AuxNota;
 								                
 							            AuxCod = 0;
 						                   
-										sleep(3);	
+										Sleep(3000);	
 									}
 								    else if(AuxNota<0 || AuxNota>10)
 								    {
-								    	LimparTela(2,23,3,78);
+								    	LimparTela(2,24,2,79);
 										Moldura(1,1,80,25,1,3);
 										x=38-(strlen("### Nota fora dos padroes ###")/2);
 							            gotoxy(x,13);
 							            printf("### Nota fora dos padroes ###");
-							            sleep(2);
+							            Sleep(2000);
 									}
 								    
 								}while(AuxCod != 0);
@@ -1630,75 +1713,25 @@ void AtualizarNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,Tp
 					}
 					else if(k==TLN && AuxCod!=0)
 					{
-						LimparTela(2,23,3,78);
+						LimparTela(2,24,2,79);
 						Moldura(1,1,80,25,1,3);
 				        x=38-(strlen("### Nota Nao Encontrada ###")/2);
 			            gotoxy(x,13);
 			            printf("### Nota Nao Encontrada ###");;
-				        sleep(2);
+				        Sleep(2000);
 					}
 					
 				}while(k==TLN && AuxCod!=0);
-				
-				if(k!=TLN && AuxCod!=0)
-				{
-					j=7;	
-					LimparTela(2,23,3,78);
-					Moldura(1,1,80,25,1,3);
-					x=38-(strlen("### Atualizar Aluno ###")/2);
-					gotoxy(x,3);
-					printf("### Atualizar Aluno ###");
-					
-					gotoxy(5,j++);
-					printf("RA: %s",AuxAlunos[i].RA);
-					gotoxy(5,j++);
-					printf("Nome do aluno: %s",AuxAlunos[i].Nome);
-					
-					
-					do	
-					{	
-						j=7;	
-						LimparTela(2,23,3,78);
-						Moldura(1,1,80,25,1,3);
-						x=38-(strlen("### Atualizar Aluno ###")/2);
-						gotoxy(x,3);
-						printf("### Atualizar Aluno ###");	
-						gotoxy(5,++j);
-						printf("Deseja Atualiza-lo? [S] Sim [N] Nao");
-						gotoxy(5,++j);
-						printf("Opcao Escolhida: ");
-						
-						menu=toupper(getch());
-					    
-					}while(menu!=83 && menu!=78);
-					
-					if(menu==83)
-					{
-						LimparTela(2,23,3,78);
-						Moldura(1,1,80,25,1,3);
-						x=38-(strlen("### Atualizacao Realizada com Sucesso ###")/2);
-						gotoxy(x,13);
-						printf("### Atualizacao Realizada com Sucesso ###");
-						
-						strcpy(AuxNotas[i].RA,AuxRA);
-						AuxNotas[i].CodDisc=AuxCod;
-						AuxNotas[i].Nota=AuxNota;
-									
-						TLN--;	
-					
-						sleep(3);
-				 	}
-				}
 			}														
         }
 		else if(strcmp(AuxRA,"0")!=0)
 		{
-			LimparTela(2,23,3,78);
+			LimparTela(2,24,2,79);
 			Moldura(1,1,80,25,1,3);
 			x=38-(strlen("### RA Invalido ###")/2);
             gotoxy(x,13);
             printf("### RA Invalido ###");
-            sleep(2);
+            Sleep(2000);
         }
 		
 		j=7;
@@ -1713,7 +1746,7 @@ void ExcluirAlunos(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int &TLN)
 
     do
     {
-    	LimparTela(2,23,3,78);
+    	LimparTela(2,24,2,79);
 		Moldura(1,1,80,25,1,3);
     	x=38-(strlen("### Excluir Aluno ###")/2);
 	    gotoxy(x,3);
@@ -1725,7 +1758,7 @@ void ExcluirAlunos(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int &TLN)
         printf("Digite o RA do Aluno: ");
         scanf(" %s",&AuxRA);
 
-        if(strlen(AuxRA)==12)
+        if(strlen(AuxRA)==12 && VerificaRA(AuxRA))
         {
             i=0;
 
@@ -1735,25 +1768,25 @@ void ExcluirAlunos(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int &TLN)
 			
             if(i==TLA)
             {
-            	LimparTela(2,23,3,78);
+            	LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
             	x=38-(strlen("### Esse Aluno nao esta cadastrado no sistema ###")/2);
 				gotoxy(x,13);
                 printf("### Esse Aluno nao esta cadastrado no sistema ###");
-                sleep(3);
+                Sleep(3000);
             }
             else
             {
-            	LimparTela(2,23,3,78);
+            	LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
 	            x=38-(strlen("### Aluno Encontrado ###")/2);
             	gotoxy(x,13);
                 printf("### Aluno Encontrado ###");;
-	            sleep(2);
+	            Sleep(2000);
 	            
 	            j=7;
 	            
-	            LimparTela(2,23,3,78);
+	            LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
 		    	x=38-(strlen("### Excluir Aluno ###")/2);
 			    gotoxy(x,3);
@@ -1787,7 +1820,7 @@ void ExcluirAlunos(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int &TLN)
 						                	
 				if(x==TLN && menu==83)
 				{
-					LimparTela(2,23,3,78);
+					LimparTela(2,24,2,79);
 					Moldura(1,1,80,25,1,3);
 					x=38-(strlen("### Exclusao Realizada com Sucesso ###")/2);
 					gotoxy(x,13);
@@ -1801,14 +1834,14 @@ void ExcluirAlunos(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int &TLN)
 					
 					TLA--;
 					
-					sleep(3);
+					Sleep(3000);
 				 }
 				else if(menu!=78)
 				{
 					do
 					{			
 						j=7;	
-						LimparTela(2,23,3,78);
+						LimparTela(2,24,2,79);
 						Moldura(1,1,80,25,1,3);
 						x=38-(strlen("### Atualizar Aluno ###")/2);
 						gotoxy(x,3);
@@ -1828,7 +1861,7 @@ void ExcluirAlunos(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int &TLN)
 					
 					if(menu==83)
 					{
-						LimparTela(2,23,3,78);
+						LimparTela(2,24,2,79);
 						Moldura(1,1,80,25,1,3);
 						x=38-(strlen("### Exclusao Realizada com Sucesso ###")/2);
 						gotoxy(x,13);
@@ -1864,19 +1897,19 @@ void ExcluirAlunos(TpAluno AuxAlunos[30],int &TLA,TpNota AuxNotas[30],int &TLN)
 						
 						TLA--;
 						
-						sleep(3);
+						Sleep(3000);
 					}
 				}
 			}														
         }
 		else if(strcmp(AuxRA,"0")!=0)
 		{
-			LimparTela(2,23,3,78);
+			LimparTela(2,24,2,79);
 			Moldura(1,1,80,25,1,3);
 			x=38-(strlen("### RA Invalido ###")/2);
             gotoxy(x,13);
             printf("### RA Invalido ###");
-            sleep(2);
+            Sleep(2000);
         }
 		
 		j=7;
@@ -1892,7 +1925,7 @@ void ExcluirDisci(TpDisci AuxDisci[30],int &TLD,TpNota AuxNotas[30],int &TLN)
 
     do
     {
-    	LimparTela(2,23,3,78);
+    	LimparTela(2,24,2,79);
 		Moldura(1,1,80,25,1,3);
     	x=38-(strlen("### Excluir Disciplina ###")/2);
 	    gotoxy(x,3);
@@ -1914,25 +1947,25 @@ void ExcluirDisci(TpDisci AuxDisci[30],int &TLD,TpNota AuxNotas[30],int &TLN)
 			
             if(i==TLD)
             {
-            	LimparTela(2,23,3,78);
+            	LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
             	x=38-(strlen("### Essa Disciplina nao esta cadastrado no sistema ###")/2);
 				gotoxy(x,13);
                 printf("### Essa Disciplina nao esta cadastrado no sistema ###");
-                sleep(3);
+                Sleep(3000);
             }
             else
             {
-            	LimparTela(2,23,3,78);
+            	LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
 	            x=38-(strlen("### Disciplina Encontrada ###")/2);
             	gotoxy(x,13);
                 printf("### Disciplina Encontrada ###");;
-	            sleep(2);
+	            Sleep(2000);
 	            
 	            j=7;
 	            
-	            LimparTela(2,23,3,78);
+	            LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
 		    	x=38-(strlen("### Excluir Disciplina ###")/2);
 			    gotoxy(x,3);
@@ -1966,7 +1999,7 @@ void ExcluirDisci(TpDisci AuxDisci[30],int &TLD,TpNota AuxNotas[30],int &TLN)
 						                	
 				if(x==TLN && menu==83)
 				{
-					LimparTela(2,23,3,78);
+					LimparTela(2,24,2,79);
 					Moldura(1,1,80,25,1,3);
 					x=38-(strlen("### Exclusao Realizada com Sucesso ###")/2);
 					gotoxy(x,13);
@@ -1980,14 +2013,14 @@ void ExcluirDisci(TpDisci AuxDisci[30],int &TLD,TpNota AuxNotas[30],int &TLN)
 					
 					TLD--;
 					
-					sleep(3);
+					Sleep(3000);
 				 }
 				else if(menu!=78)
 				{
 					do
 					{			
 						j=7;	
-						LimparTela(2,23,3,78);
+						LimparTela(2,24,2,79);
 						Moldura(1,1,80,25,1,3);
 						x=38-(strlen("### Atualizar Aluno ###")/2);
 						gotoxy(x,3);
@@ -2007,7 +2040,7 @@ void ExcluirDisci(TpDisci AuxDisci[30],int &TLD,TpNota AuxNotas[30],int &TLN)
 					
 					if(menu==83)
 					{
-						LimparTela(2,23,3,78);
+						LimparTela(2,24,2,79);
 						Moldura(1,1,80,25,1,3);
 						x=38-(strlen("### Exclusao Realizada com Sucesso ###")/2);
 						gotoxy(x,13);
@@ -2046,7 +2079,7 @@ void ExcluirDisci(TpDisci AuxDisci[30],int &TLD,TpNota AuxNotas[30],int &TLN)
 						
 						TLD--;
 						
-						sleep(3);
+						Sleep(3000);
 					}
 				}
 				
@@ -2055,12 +2088,12 @@ void ExcluirDisci(TpDisci AuxDisci[30],int &TLD,TpNota AuxNotas[30],int &TLN)
         }
 		else if(AuxCod<0)
 		{
-			LimparTela(2,23,3,78);
+			LimparTela(2,24,2,79);
 			Moldura(1,1,80,25,1,3);
 			x=38-(strlen("### Codigo Invalido ###")/2);
             gotoxy(x,13);
             printf("### Codigo Invalido ###");
-            sleep(2);
+            Sleep(2000);
         }
 		
 		j=7;
@@ -2076,7 +2109,7 @@ void ExcluirNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,TpAl
 
     do
     {
-    	LimparTela(2,23,3,78);
+    	LimparTela(2,24,2,79);
 		Moldura(1,1,80,25,1,3);
     	x=38-(strlen("### Excluir Notas ###")/2);
 	    gotoxy(x,3);
@@ -2088,7 +2121,7 @@ void ExcluirNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,TpAl
         printf("Digite o RA do Aluno: ");
         scanf(" %s",&AuxRA);
         
-        if(strlen(AuxRA)==12)
+        if(strlen(AuxRA)==12 && VerificaRA(AuxRA))
         {
             i=0;
 
@@ -2098,25 +2131,25 @@ void ExcluirNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,TpAl
 			
             if(i==TLA)
             {
-            	LimparTela(2,23,3,78);
+            	LimparTela(2,24,2,79);
 				Moldura(1,1,80,25,1,3);
             	x=38-(strlen("### Nao existem Notas desse RA cadastradas no sistema ###")/2);
 				gotoxy(x,13);
                 printf("### Nao existem Notas desse RA cadastradas no sistema ###");
-                sleep(3);
+                Sleep(3000);
             }
             else
             {
-		            LimparTela(2,23,3,78);
+		            LimparTela(2,24,2,79);
 					Moldura(1,1,80,25,1,3);
 			        x=38-(strlen("### Aluno Encontrado ###")/2);
 		            gotoxy(x,13);
 		            printf("### Aluno Encontrado ###");;
-			        sleep(2);
+			        Sleep(2000);
 			            
 			        j=7;
 			            
-			        LimparTela(2,23,3,78);
+			        LimparTela(2,24,2,79);
 					Moldura(1,1,80,25,1,3);
 				   	x=38-(strlen("### Excluir Notas ###")/2);
 					gotoxy(x,3);
@@ -2159,21 +2192,21 @@ void ExcluirNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,TpAl
 						
 					if(k!=TLN)
 					{
-						LimparTela(2,23,3,78);
+						LimparTela(2,24,2,79);
 						Moldura(1,1,80,25,1,3);
 				        x=38-(strlen("### Nota Encontrado ###")/2);
 			            gotoxy(x,13);
 			            printf("### Nota Encontrado ###");;
-				        sleep(2);
+				        Sleep(2000);
 					}
 					else if(k==TLN && AuxCod!=0)
 					{
-						LimparTela(2,23,3,78);
+						LimparTela(2,24,2,79);
 						Moldura(1,1,80,25,1,3);
 				        x=38-(strlen("### Nota Nao Encontrado ###")/2);
 			            gotoxy(x,13);
 			            printf("### Nota Nao Encontrado ###");;
-				        sleep(2);
+				        Sleep(2000);
 					}
 					
 				}while(k==TLN && AuxCod!=0);
@@ -2183,7 +2216,7 @@ void ExcluirNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,TpAl
 					do	
 					{	
 						j=7;	
-						LimparTela(2,23,3,78);
+						LimparTela(2,24,2,79);
 						Moldura(1,1,80,25,1,3);
 						x=38-(strlen("### Atualizar Aluno ###")/2);
 						gotoxy(x,3);
@@ -2199,7 +2232,7 @@ void ExcluirNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,TpAl
 					
 					if(menu==83)
 					{
-						LimparTela(2,23,3,78);
+						LimparTela(2,24,2,79);
 						Moldura(1,1,80,25,1,3);
 						x=38-(strlen("### Exclusao Realizada com Sucesso ###")/2);
 						gotoxy(x,13);
@@ -2215,7 +2248,7 @@ void ExcluirNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,TpAl
 									
 							TLN--;	
 					
-						sleep(3);
+						Sleep(3000);
 				 	}
 				}
 									                	
@@ -2224,12 +2257,12 @@ void ExcluirNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,TpAl
         }
 		else if(strcmp(AuxRA,"0")!=0)
 		{
-			LimparTela(2,23,3,78);
+			LimparTela(2,24,2,79);
 			Moldura(1,1,80,25,1,3);
 			x=38-(strlen("### RA Invalido ###")/2);
             gotoxy(x,13);
             printf("### RA Invalido ###");
-            sleep(2);
+            Sleep(2000);
         }
 		
 		j=7;
@@ -2242,7 +2275,7 @@ void VisualizarAlunos(TpAluno AuxAlunos[30], int &TLA)
     int i,j=10,k,x=0;
 
     
-    LimparTela(2,23,3,78);
+    LimparTela(2,24,2,79);
 	Moldura(1,1,80,25,1,3);
     x=38-(strlen("Visuazilar Alunos")/2);
     gotoxy(x,3);
@@ -2256,8 +2289,6 @@ void VisualizarAlunos(TpAluno AuxAlunos[30], int &TLA)
     {
 	    textcolor(0);
 		textbackground(7);
-
-        //x=17;
 		
         for(i=16;i<=59;i++)
         {
@@ -2316,7 +2347,7 @@ void VisualizarDisci(TpDisci AuxDisci[50], int &TLD)
 {
     int i,j=10,k,x=0;
     
-    LimparTela(2,23,3,78);
+    LimparTela(2,24,2,79);
 	Moldura(1,1,80,25,1,3);
     x=38-(strlen("Visuazilar Disciplina")/2);
     gotoxy(x,3);
@@ -2331,8 +2362,6 @@ void VisualizarDisci(TpDisci AuxDisci[50], int &TLD)
     {
 	    textcolor(0);
 		textbackground(7);
-
-        //x=17;
 		
         for(i=16;i<=59;i++)
         {
@@ -2374,9 +2403,7 @@ void VisualizarDisci(TpDisci AuxDisci[50], int &TLD)
 				textbackground(0);
 			}
 			
-			
-        	x=22-(strlen(AuxDisci[i].Descr)/2);
-            gotoxy(x,j);printf("%d", AuxDisci[i].CodDisc);
+            gotoxy(21,j);printf("%d", AuxDisci[i].CodDisc);
             x=44-(strlen(AuxDisci[i].Descr)/2);
             gotoxy(x,j);printf("%s", AuxDisci[i].Descr);
             
@@ -2397,7 +2424,7 @@ void VisualizarNotas(TpNota AuxNotas[30], int &TLN)
 {
     int i,j=10,k,x=0;
     
-    LimparTela(2,23,3,78);
+    LimparTela(2,24,2,79);
 	Moldura(1,1,80,25,1,3);
     x=38-(strlen("Visuazilar Notas")/2);
     gotoxy(x,3);
@@ -2478,7 +2505,7 @@ void Reprov2(TpNota AuxNotas[50],int TLN,TpAluno AuxAlunos[30],int TLA)
 {
 	int i,j,k,x=3;
 	
-	LimparTela(2,23,3,78);
+	LimparTela(2,24,2,79);
 	Moldura(1,1,80,25,1,3);
 	gotoxy(5,x++);			
 	printf("Alunos que ficaram com 2 materias ou mais com a media abaixo de 6: ");
@@ -2515,7 +2542,7 @@ void BuscaInicial(TpAluno AuxAlunos[30],int TLA)
 	
 	char busca;
 	
-	LimparTela(2,23,3,78);
+	LimparTela(2,24,2,79);
 	Moldura(1,1,80,25,1,3);
     x=38-(strlen("Busca por Inicial Aluno")/2);
     gotoxy(x,3);		
@@ -2543,11 +2570,11 @@ void BuscaInicial(TpAluno AuxAlunos[30],int TLA)
 	
 	if(j==8)
 	{
-		LimparTela(2,23,3,78);
+		LimparTela(2,24,2,79);
 		x=38-(strlen("Nao tem nenhum aluno com a inicial 'C'")/2);
 		gotoxy(x,13);		
 		printf("Nao tem nenhum aluno com a inicial '%c'",busca);
-		sleep(3);
+		Sleep(3000);
 	}
 	else
 	{
@@ -2564,7 +2591,7 @@ void BuscaPalavra(TpDisci AuxDisci[30],int TLD)
 	
 	char busca[100],busca2[100];
 	
-	LimparTela(2,23,3,78);
+	LimparTela(2,24,2,79);
 	Moldura(1,1,80,25,1,3);
     x=38-(strlen("Busca por Palavra Disciplina")/2);
     gotoxy(x,3);		
@@ -2601,11 +2628,11 @@ void BuscaPalavra(TpDisci AuxDisci[30],int TLD)
 	
 	if(j==8)
 	{
-		LimparTela(2,23,3,78);
+		LimparTela(2,24,2,79);
 		x=38-(strlen("Nao tem nenhuma disciplina com a palavra 'xxxxxx'")/2);
 		gotoxy(x,13);		
 		printf("Nao tem nenhuma disciplina com a palavra '%s'",busca);
-		sleep(3);
+		Sleep(3000);
 	}
 	else
 	{
@@ -2622,7 +2649,7 @@ void MediaDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[50],int TLN)
 	int i,j,x=3,y;
 	float k;
 	
-	LimparTela(2,23,3,78);
+	LimparTela(2,24,2,79);
 	Moldura(1,1,80,25,1,3);
 	gotoxy(5,x++);			
 	printf("Materias com a media Abaixo de 6: ");
@@ -2663,10 +2690,12 @@ void MediaDisci(TpDisci AuxDisci[30],int TLD,TpNota AuxNotas[50],int TLN)
 void VisualizarDados(TpNota AuxNotas[30],int &TLN,TpAluno AuxAlunos[30],int TLA,TpDisci AuxDisci[50],int TLD)
 {
 	int i,j=3,k,x,y;
+
+	OrdenacaoNome(AuxAlunos,TLA);
+
+	OrdenacaoDisci(AuxDisci,TLD);
 	
-	LimparTela(2,23,3,78);
-	Moldura(1,1,80,25,1,3);
-	
+	system("cls");
 	
 	for(i=0;i<TLA;i++)
 	{
@@ -2680,35 +2709,92 @@ void VisualizarDados(TpNota AuxNotas[30],int &TLN,TpAluno AuxAlunos[30],int TLA,
 				while(AuxNotas[k].CodDisc != AuxDisci[y].CodDisc && y<TLD)
 					y++;
 					
-				if(AuxNotas[k].Nota>6)
+				if(AuxNotas[k].Nota>=6)
 				{
-					gotoxy(5,j);printf("Disciplina: %d",AuxDisci[y].CodDisc);gotoxy(21,j);printf("- %s",AuxDisci[y].Descr);gotoxy(43,j++);printf("Nota: %.1f  Situacao: %s",AuxNotas[k].Nota,"Aprovado");
+					gotoxy(5,j);printf("Disciplina: %d",AuxDisci[y].CodDisc);gotoxy(21,j);printf("- %s",AuxDisci[y].Descr);gotoxy(43,j++);printf("   Nota: %.1f  Situacao: %s",AuxNotas[k].Nota,"Aprovado");
 				}
 				else
 				{
-					gotoxy(5,j);printf("Disciplina: %d",AuxDisci[y].CodDisc);gotoxy(21,j);printf("- %s",AuxDisci[y].Descr);gotoxy(43,j++);printf("Nota: %.1f  Situacao: %s",AuxNotas[k].Nota,"Reprovado");
+					gotoxy(5,j);printf("Disciplina: %d",AuxDisci[y].CodDisc);gotoxy(21,j);printf("- %s",AuxDisci[y].Descr);gotoxy(43,j++);printf("   Nota: %.1f  Situacao: %s",AuxNotas[k].Nota,"Reprovado");
 				}
 			}
 		j++;
 	}
-	
+
+	j+=2;
+
 	x=38-(strlen("### Aperte qualquer teclar para sair ###")/2);
+
 	gotoxy(x,22);
+	
+	if(j>22)
+		gotoxy(x,j);
+		
     printf("### Aperte qualquer teclar para sair ###");
+
+	j++;
+
+	if(j>25)
+		Moldura(1,1,80,++j,1,3);
+	else
+		Moldura(1,1,80,25,1,3);
+
 	getch();
 	
 }
 
-void Iniciar()
+void Iniciar(int j)
 {
-	int x=0,i;
+	int x=0,i,k;
+	char atp[15];
 	
     system("cls");
     Moldura(1,1,80,25,1,3);
-	x=38-(strlen("### ATP 2 Alunos ###")/2);
-    gotoxy(x,13);
-    printf("### ATP 2 Alunos ###");
-    sleep(3);
+	fflush(stdin);
+	strcpy(atp,"### ATP 2 Alunos ###");
+	x=38-(strlen(atp)/2);
+    
+	if(j==0)
+	{
+		gotoxy(x,13);
+
+		for(i=0;i<=strlen("### ATP 2 Alunos ###");i++)
+		{
+			printf("%c",atp[i]);
+			Sleep(100);
+		}
+
+		Sleep(1000);
+
+		k=x;
+
+		x+=strlen(atp)+3;
+
+		for(i=x;i>=k;i--)
+		{
+			gotoxy(i,13);
+			printf(" ");
+			Sleep(50);
+		}
+	}
+	else
+	{
+		gotoxy(x,13);
+		printf("%s",atp);
+
+		Sleep(1000);
+
+		k=x;
+
+		x+=strlen(atp)+3;
+
+		for(i=x;i>=k;i--)
+		{
+			gotoxy(i,13);
+			printf(" ");
+			Sleep(100);
+		}
+	}
 }
 
 
@@ -2724,7 +2810,7 @@ void CRUD(char Menu,TpAluno AuxAlunos[30], int &TLA,TpDisci AuxDisci[50], int &T
             do
             {
                 i=7;
-                LimparTela(2,23,3,78);
+                LimparTela(2,24,2,79);
                 Moldura(1,1,80,25,1,3);
                 x=38-(strlen("Menu Cadastrar")/2);
                 gotoxy(x,3);
@@ -2758,7 +2844,7 @@ void CRUD(char Menu,TpAluno AuxAlunos[30], int &TLA,TpDisci AuxDisci[50], int &T
             do
             {
                 i=7;
-                LimparTela(2,23,3,78);
+                LimparTela(2,24,2,79);
                 Moldura(1,1,80,25,1,3);
                 x=38-(strlen("Menu Atualizar")/2);
                 gotoxy(x,3);
@@ -2791,7 +2877,7 @@ void CRUD(char Menu,TpAluno AuxAlunos[30], int &TLA,TpDisci AuxDisci[50], int &T
             do
             {
                 i=7;
-                LimparTela(2,23,3,78);
+                LimparTela(2,24,2,79);
                 Moldura(1,1,80,25,1,3);;
                 x=39-(strlen("Menu Excluir")/2);
                 gotoxy(x,3);
@@ -2825,7 +2911,7 @@ void CRUD(char Menu,TpAluno AuxAlunos[30], int &TLA,TpDisci AuxDisci[50], int &T
             do
             {
                 i=7;
-                LimparTela(2,23,3,78);
+                LimparTela(2,24,2,79);
                 Moldura(1,1,80,25,1,3);
                 x=38-(strlen("Menu Visualizar")/2);
                 gotoxy(x,3);
@@ -2938,9 +3024,9 @@ int Menu()
 
 int main ()
 {
-	Iniciar();
+	Iniciar(0);
 	
 	Menu();
 	
-	Iniciar();
+	Iniciar(28);
 }
