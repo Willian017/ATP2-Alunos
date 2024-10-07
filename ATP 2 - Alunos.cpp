@@ -2272,7 +2272,7 @@ void ExcluirNotas(TpNota AuxNotas[30],int &TLN,TpDisci AuxDisci[30],int TLD,TpAl
 
 void VisualizarAlunos(TpAluno AuxAlunos[30], int &TLA)
 {
-    int i,j=10,k,x=0;
+    int i,j=7,k,x=0;
 
     
     LimparTela(2,24,2,79);
@@ -2292,20 +2292,20 @@ void VisualizarAlunos(TpAluno AuxAlunos[30], int &TLA)
 		
         for(i=16;i<=59;i++)
         {
-            gotoxy(i,9);printf(" ");
+            gotoxy(i,j);printf(" ");
         }
 		
         x=22-(strlen("RA")/2);
-        gotoxy(x,9);
+        gotoxy(x,j);
 		printf("RA");
         x=44-(strlen("Nome")/2);
-        gotoxy(x,9);
+        gotoxy(x,j);
 	    printf("Nome");
 			
 		textcolor(7);
 		textbackground(0);
 		
-        gotoxy(28,9);printf(" ");  
+        gotoxy(28,j++);printf(" ");  
     
         for(i=0;i<TLA;i++)
         {
@@ -2345,7 +2345,7 @@ void VisualizarAlunos(TpAluno AuxAlunos[30], int &TLA)
 
 void VisualizarDisci(TpDisci AuxDisci[50], int &TLD)
 {
-    int i,j=10,k,x=0;
+    int i,j=7,k,x=0;
     
     LimparTela(2,24,2,79);
 	Moldura(1,1,80,25,1,3);
@@ -2365,20 +2365,20 @@ void VisualizarDisci(TpDisci AuxDisci[50], int &TLD)
 		
         for(i=16;i<=59;i++)
         {
-            gotoxy(i,9);printf(" ");
+            gotoxy(i,j);printf(" ");
         }
 		
         x=22-(strlen("Codigo")/2);
-        gotoxy(x,9);
+        gotoxy(x,j);
 		printf("Codigo");
         x=44-(strlen("Descricao")/2);
-        gotoxy(x,9);
+        gotoxy(x,j);
 	    printf("Descricao");
 			
 		textcolor(7);
 		textbackground(0);
 		
-        gotoxy(28,9);printf(" ");  
+        gotoxy(28,j++);printf(" ");  
     
         for(i=0;i<TLD;i++)
         {
@@ -2422,7 +2422,7 @@ void VisualizarDisci(TpDisci AuxDisci[50], int &TLD)
 
 void VisualizarNotas(TpNota AuxNotas[30], int &TLN)
 {
-    int i,j=10,k,x=0;
+    int i,j=7,k,x=0;
     
     LimparTela(2,24,2,79);
 	Moldura(1,1,80,25,1,3);
@@ -2444,22 +2444,22 @@ void VisualizarNotas(TpNota AuxNotas[30], int &TLN)
 		
         for(i=16;i<=55;i++)
         {
-            gotoxy(i,9);printf(" ");
+            gotoxy(i,j);printf(" ");
         }
 		
         x=22-(strlen("RA")/2);
-        gotoxy(x,9);
+        gotoxy(x,j);
 		printf("RA");
-        gotoxy(29,9);
+        gotoxy(29,j);
 	    printf("Codigo Disciplina");
-	    gotoxy(50,9);
+	    gotoxy(50,j);
 	    printf("Nota");
 			
 		textcolor(7);
 		textbackground(0);
 		
-        gotoxy(28,9);printf(" ");  
-        gotoxy(47,9);printf(" ");  
+        gotoxy(28,j);printf(" ");  
+        gotoxy(47,j++);printf(" ");  
     
         for(i=0;i<TLN;i++)
         {
