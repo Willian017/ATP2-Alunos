@@ -1,6 +1,6 @@
 <h1 align="center">ATP2 Alunos</h1>
 <p align="center">Crud em C</p>
-<h4 align="center"> 🚀 Finalizado 🚀 </h4>
+<h4 align="center">🚀 Finalizado 🚀</h4>
 
 ### 🛠 Tecnologias
 
